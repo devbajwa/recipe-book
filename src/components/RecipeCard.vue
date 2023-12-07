@@ -23,7 +23,7 @@ onMounted(() => {
 
 <template>
   <div class="card">
-    <div class="card__header">
+    <!-- <div class="card__header">
       <div>
         <font-awesome-icon
           icon="fa-solid fa-fire-flame-curved"
@@ -60,7 +60,7 @@ onMounted(() => {
           >Time to cook: {{ recipe.cookTime }}</span
         >
       </div>
-    </div>
+    </div> -->
     <div class="card__title">
       <h2>{{ recipe.name }}</h2>
     </div>

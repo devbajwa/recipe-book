@@ -46,7 +46,7 @@ const recipes = ref([
         id: 3,
         date: getDate(),
         name: "Samosa",
-        desc: "This is the delicious meal.",
+        desc: "This is the delicious meal. This is the delicious meal. This is the delicious meal. This is the delicious meal.",
         isFav: true,
         ingredients: [{ name: "Love", qty: "1sp" }, { name: "Effection",  qty: "2sp"}],
         method: [{step: "Hold the hands"}, {step: "Never let go"}],
