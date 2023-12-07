@@ -1,21 +1,20 @@
 <script setup>
-
+import HeroSection from './HeroSection.vue';
+import {RouterLink, useRouter} from 'vue-router';
+const router = useRouter();
 </script>
 <template>
 <div class="nav container">
   <div class="nav-logo">
-    <h1>Recipes Book</h1>
+    <h1 @click="router.push('/')">Recipes Book</h1>
   </div>
-    <!-- <RouterLink active-class="active" to="/">Home</RouterLink>
+  <div class="nav-links">
+    <RouterLink active-class="active" to="/">Recipes</RouterLink>
+    <RouterLink active-class="active" to="/add-recipe">Add Recipe</RouterLink>
     <RouterLink active-class="active" to="/about">About</RouterLink>
-    <RouterLink active-class="active" to="/add-recipe">Add Recipe</RouterLink> -->
-    <div class="nav-links">
-      <a href="#">Recipes</a>
-      <a href="#">Add Recipe</a>
-      <a href="#">About</a>
     </div>
 </div>
-
+<HeroSection />
 </template>
 <style scoped>
 
@@ -23,27 +22,34 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  border-bottom: 1px solid #f6f6f6;
 }
 
 .nav .nav-logo h1{
   font-family: var(--signature-font);
+  cursor: pointer;
+}
+.nav .nav-logo h1:hover{
+  color: var(--accent)
 }
 
 .nav .nav-links{
   display: flex;
-  gap: 1.25rem;
+  gap: 2rem;
 }
 
 .nav .nav-links a{
   text-decoration: none;
-  color: #333;
-  font-weight: bold;
+  color: var(--dark-grey);
+  font-weight: none;
+  font-size: 1.125rem;
 }
 
 .nav .nav-links a:hover{
-  color: #FF5555;
+  color: var(--accent);
+}
+
+.nav .nav-links a.active{
+  color: var(--accent);
 }
 
 @media(max-width: 545px){
