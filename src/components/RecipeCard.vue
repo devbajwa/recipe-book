@@ -1,14 +1,20 @@
 <script setup>
+import {ref, defineProps} from 'vue';
 
+defineProps(["recipe"])
 </script>
 
 <template>
 <div class="card">
+    <div class="card__header">
+       Cook time:  <span>{{ recipe.cookTime }}</span>
+    </div>
     <div class="card__title">
-        <h2>Biryani</h2>
+        <h2>{{ recipe.name }}</h2>
     </div>
     <div class="card__desc">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ut, explicabo nemo dolores quam magnam?</p>
+        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil ut, explicabo nemo dolores quam magnam?</p> -->
+        <p>{{ recipe.desc }}</p>
     </div>
 </div>
 
