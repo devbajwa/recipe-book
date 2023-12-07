@@ -2,26 +2,34 @@
 import {ref} from 'vue';
 import RecipeCard from '../components/RecipeCard.vue';
 
+const getDate = () => {
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return `${day}/${month}/${year}`;
+}
+
 
 const recipes = ref([
     {
         id: 1,
-        date: Date.now(),
+        date: getDate(),
         name: "Biryani",
         desc: "This is the delicious meal.",
-        isFav: false,
+        isFav: true,
         ingredients: [{ name: "Love", qty: "1sp" }, { name: "Effection",  qty: "2sp"}],
         method: [{step: "Hold the hands"}, {step: "Never let go"}],
         category: "Cuddle",
         prepTime: "2 min",
         cookTime: "Forever",
-        spiceLevel: "Extreme",
+        spiceLevel: "Low",
         chef: "Wife",
         occasion: "Life"
     },
     {
         id: 2,
-        date: Date.now(),
+        date: getDate(),
         name: "Nihari",
         desc: "This is the delicious meal.",
         isFav: false,
@@ -30,16 +38,16 @@ const recipes = ref([
         category: "Cuddle",
         prepTime: "2 min",
         cookTime: "Forever",
-        spiceLevel: "Extreme",
+        spiceLevel: "Medium",
         chef: "Wife",
         occasion: "Life"
     },
     {
         id: 3,
-        date: Date.now(),
+        date: getDate(),
         name: "Samosa",
         desc: "This is the delicious meal.",
-        isFav: false,
+        isFav: true,
         ingredients: [{ name: "Love", qty: "1sp" }, { name: "Effection",  qty: "2sp"}],
         method: [{step: "Hold the hands"}, {step: "Never let go"}],
         category: "Cuddle",
@@ -48,8 +56,24 @@ const recipes = ref([
         spiceLevel: "Extreme",
         chef: "Wife",
         occasion: "Life"
+    },
+    {
+        id: 4,
+        date: getDate(),
+        name: "Haleem",
+        desc: "This is the delicious meal.",
+        isFav: true,
+        ingredients: [{ name: "Love", qty: "1sp" }, { name: "Effection",  qty: "2sp"}],
+        method: [{step: "Hold the hands"}, {step: "Never let go"}],
+        category: "Cuddle",
+        prepTime: "2 min",
+        cookTime: "1 hr",
+        spiceLevel: "High",
+        chef: "Wife",
+        occasion: "Life"
     }
 ])
+
 </script>
 <template>
     <section>
@@ -63,15 +87,20 @@ const recipes = ref([
 
 <style scoped>
 .card-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
 }
 
 /* Media query for smaller screens */
 @media screen and (max-width: 768px) {
   .card-container{
-    display: block;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+/* Media query for smaller screens */
+@media screen and (max-width: 580px) {
+  .card-container{
+    grid-template-columns: repeat(1, 1fr);
   }
 }
 </style>
