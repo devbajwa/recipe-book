@@ -21,7 +21,7 @@
 
   /* COLORS */
 
-  --primary: #7CB342; /*lime-green*/
+  --primary: #42B883; /*lime-green*/
   --accent: #FF6347; /*tomato-red*/
   --bright-red: #FF5555;
   --light-grey: #F6F6F6;
@@ -29,6 +29,8 @@
   --dark-grey: #333333;
   --amber: #FFD54D;
   --pale-yellow: #FFECB3;
+  --green-light: #42d392;
+  --green-lighter: #35eb9a;
 }
 
 body{

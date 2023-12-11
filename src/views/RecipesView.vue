@@ -2,19 +2,11 @@
 import {ref} from 'vue';
 import RecipeCard from '../components/RecipeCard.vue';
 
-const getDate = () => {
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    return `${day}/${month}/${year}`;
-}
-
 
 const recipes = ref([
     {
         id: 1,
-        date: getDate(),
+        //date: getDate(),
         name: "Biryani",
         desc: "This is the delicious meal.",
         isFav: true,
@@ -29,7 +21,7 @@ const recipes = ref([
     },
     {
         id: 2,
-        date: getDate(),
+        //date: getDate(),
         name: "Nihari",
         desc: "This is the delicious meal.",
         isFav: false,
@@ -44,7 +36,7 @@ const recipes = ref([
     },
     {
         id: 3,
-        date: getDate(),
+        //date: getDate(),
         name: "Samosa",
         desc: "This is the delicious meal. This is the delicious meal. This is the delicious meal. This is the delicious meal.",
         isFav: true,
@@ -59,7 +51,7 @@ const recipes = ref([
     },
     {
         id: 4,
-        date: getDate(),
+        //date: getDate(),
         name: "Haleem",
         desc: "This is the delicious meal.",
         isFav: true,
@@ -74,6 +66,7 @@ const recipes = ref([
     }
 ])
 
+//console.log(JSON.stringify(recipes.value))
 </script>
 <template>
     <section>

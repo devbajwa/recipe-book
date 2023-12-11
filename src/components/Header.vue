@@ -14,7 +14,7 @@ const router = useRouter();
     <RouterLink active-class="active" to="/about">About</RouterLink>
     </div>
 </div>
-<HeroSection />
+<!-- <HeroSection /> -->
 </template>
 <style scoped>
 
