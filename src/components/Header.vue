@@ -1,5 +1,4 @@
 <script setup>
-import HeroSection from './HeroSection.vue';
 import {RouterLink, useRouter} from 'vue-router';
 const router = useRouter();
 </script>

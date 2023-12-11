@@ -1,83 +1,24 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onBeforeMount } from "vue";
+import HeroSection from '../components/HeroSection.vue';
 import RecipeCard from "../components/RecipeCard.vue";
+import { recipeService } from "../service/recipeService";
 
-const recipes = ref([
-  {
-    id: 1,
-    //date: getDate(),
-    name: "Biryani",
-    desc: "This is the delicious meal.",
-    isFav: true,
-    ingredients: [
-      { name: "Love", qty: "1sp" },
-      { name: "Effection", qty: "2sp" },
-    ],
-    method: [{ step: "Hold the hands" }, { step: "Never let go" }],
-    category: "Cuddle",
-    prepTime: "2 min",
-    cookTime: "Forever",
-    spiceLevel: "Low",
-    chef: "Wife",
-    occasion: "Life",
-  },
-  {
-    id: 2,
-    //date: getDate(),
-    name: "Nihari",
-    desc: "This is the delicious meal.",
-    isFav: false,
-    ingredients: [
-      { name: "Love", qty: "1sp" },
-      { name: "Effection", qty: "2sp" },
-    ],
-    method: [{ step: "Hold the hands" }, { step: "Never let go" }],
-    category: "Cuddle",
-    prepTime: "2 min",
-    cookTime: "Forever",
-    spiceLevel: "Medium",
-    chef: "Wife",
-    occasion: "Life",
-  },
-  {
-    id: 3,
-    //date: getDate(),
-    name: "Samosa",
-    desc: "This is the delicious meal. This is the delicious meal. This is the delicious meal. This is the delicious meal.",
-    isFav: true,
-    ingredients: [
-      { name: "Love", qty: "1sp" },
-      { name: "Effection", qty: "2sp" },
-    ],
-    method: [{ step: "Hold the hands" }, { step: "Never let go" }],
-    category: "Cuddle",
-    prepTime: "2 min",
-    cookTime: "Forever",
-    spiceLevel: "Extreme",
-    chef: "Wife",
-    occasion: "Life",
-  },
-  {
-    id: 4,
-    //date: getDate(),
-    name: "Haleem",
-    desc: "This is the delicious meal.",
-    isFav: true,
-    ingredients: [
-      { name: "Love", qty: "1sp" },
-      { name: "Effection", qty: "2sp" },
-    ],
-    method: [{ step: "Hold the hands" }, { step: "Never let go" }],
-    category: "Cuddle",
-    prepTime: "2 min",
-    cookTime: "1 hr",
-    spiceLevel: "High",
-    chef: "Wife",
-    occasion: "Life",
-  },
-]);
+
+
+onBeforeMount(async ()=>{
+  const fetchedRecipesFromAPI = await recipeService.getRecipes();
+  console.log(fetchedRecipesFromAPI);
+
+  recipes.value = fetchedRecipesFromAPI;
+})
+
+const recipes = ref();
+
+
 </script>
 <template>
+    <HeroSection />
   <section>
     <h1>Recipes</h1>
     <div class="card-container">

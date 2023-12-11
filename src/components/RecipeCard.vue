@@ -1,5 +1,8 @@
 <script setup>
 import { ref, defineProps, onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const props = defineProps(["recipe"]);
 
@@ -61,7 +64,7 @@ onMounted(() => {
         >
       </div>
     </div> -->
-    <div class="card__title">
+    <div class="card__title" @click="router.push(`/recipe/${recipe.id}`)">
       <h2>{{ recipe.name }}</h2>
     </div>
     <div class="card__desc">

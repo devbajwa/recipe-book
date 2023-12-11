@@ -209,7 +209,6 @@ const submitForm = () => {
 
 <template>
   <section class="container">
-    <h2>Form</h2>
     <form @submit.prevent="submitForm">
       <div class="form-subsection">
         <label>Recipe name:</label>
