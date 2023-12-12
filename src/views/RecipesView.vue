@@ -1,26 +1,21 @@
 <script setup>
 import { ref, onBeforeMount } from "vue";
-import HeroSection from '../components/HeroSection.vue';
+import HeroSection from "../components/HeroSection.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import { recipeService } from "../service/recipeService";
 
-
-
-onBeforeMount(async ()=>{
+onBeforeMount(async () => {
   const fetchedRecipesFromAPI = await recipeService.getRecipes();
   console.log(fetchedRecipesFromAPI);
 
   recipes.value = fetchedRecipesFromAPI;
-})
+});
 
 const recipes = ref();
-
-
 </script>
 <template>
-    <HeroSection />
-  <section>
-    <h1>Recipes</h1>
+  <HeroSection />
+  <section class="container">
     <div class="card-container">
       <RecipeCard :recipe="recipe" v-for="recipe in recipes" />
     </div>

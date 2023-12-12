@@ -1,7 +1,7 @@
 /**
     File:  recipeService.js
     Author: Waqas Naeem Bajwa
-*/ 
+*/
 import axios from 'axios';
 
 export const recipeService = {

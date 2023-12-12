@@ -5,16 +5,13 @@ import { recipeService } from "../service/recipeService";
 
 const recipes = ref([]);
 
-onBeforeMount(async ()=>{
+onBeforeMount(async () => {
   const fetchedRecipesFromAPI = await recipeService.getRecipes();
   recipes.value = fetchedRecipesFromAPI;
-  console.log(recipes.value)
-  console.log(fetchedRecipesFromAPI)
-})
+});
 
 const handleSubmitRecipe = async (recipeToSubmit) => {
   try {
-    console.log(recipeToSubmit)
     recipes.value.push(recipeToSubmit);
     await recipeService.saveRecipe(recipes.value); // Saving data into file via API
   } catch (error) {
@@ -24,7 +21,8 @@ const handleSubmitRecipe = async (recipeToSubmit) => {
 </script>
 
 <template>
-  <h1 class="title">Add Recipe</h1>
-
+  <section class="subhero">
+    <h1 class="title">Add Recipe</h1>
+  </section>
   <RecipeForm :isEditModeOn="false" @recipeSubmitted="handleSubmitRecipe" />
 </template>

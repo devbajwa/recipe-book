@@ -10,7 +10,6 @@ import {
 } from "vue";
 
 import { v4 as uuidv4 } from "uuid";
-import { recipeService } from "../service/recipeService";
 
 const emit = defineEmits(["recipeSubmitted"]);
 const props = defineProps(["editData", "isEditModeOn"]);
@@ -35,13 +34,6 @@ const selectedSpiceLevel = ref("");
 const selectedSugarLevel = ref("");
 const chef = ref("");
 const occasion = ref("");
-
-// const reverseIngredients = computed(() => {
-//   return editedIngredients.value.slice().reverse();
-// });
-// onMounted(() => {
-//   editedIngredients.value = editedIngredients.value.slice().reverse();
-//     });
 
 /* INGREDIENTS - Function to handle add ingredinet input on the form */
 const addIngredient = () => {
@@ -129,7 +121,7 @@ const handlePreSubmitChecks = () => {
   handleSpiceAndSugarLevels();
 };
 
-// Functio to handle after submit checks - default state
+// Function to handle after submit checks - default state
 const handleAfterSubmitChecks = () => {
   name.value = "";
   desc.value = "";
@@ -190,6 +182,7 @@ const submitForm = async () => {
       occasion: occasion.value,
     };
   } else {
+    // This is for editing
     handlePreSubmitChecks();
     recipeToSubmit = {
       id: props.editData.id,
@@ -209,10 +202,9 @@ const submitForm = async () => {
       occasion: occasion.value,
     };
   }
-  
-  localRecipe.value = recipeToSubmit; // Local state has submitted data
-  emit("recipeSubmitted", recipeToSubmit);
-  //await recipeService.saveRecipe(dataToSubmit);
+
+  localRecipe.value = recipeToSubmit; // Local state has submitted data for testing only
+  emit("recipeSubmitted", recipeToSubmit); // Emitting the event with recipe to submit via api, see the AddRecipeView.vue
 
   // Clear values to default after form submits
   handleAfterSubmitChecks();
@@ -376,8 +368,8 @@ const submitForm = async () => {
         </button>
       </div>
     </form>
-    <h1>Data Submitted</h1>
-    {{ localRecipe }}
+    <!-- <h1>Data Submitted</h1>
+    {{ localRecipe }} FOR TESTING ONLY -->
   </section>
 </template>
 
