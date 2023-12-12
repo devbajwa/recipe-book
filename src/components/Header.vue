@@ -5,7 +5,7 @@ const router = useRouter();
 <template>
 <div class="nav container">
   <div class="nav-logo">
-    <h1 @click="router.push('/')">Recipes Book</h1>
+    <h1 @click="router.push('/')">ReciPen</h1>
   </div>
   <div class="nav-links">
     <RouterLink active-class="active" to="/">Recipes</RouterLink>

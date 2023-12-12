@@ -1,7 +1,19 @@
 <template>
     <section class="container hero">
-        <h1>Recipes Book</h1>
+        <h1>ReciPen</h1>
 </section>
+<div class="container intro">
+    <p>
+      Welcome to <span class="brand">ReciPen</span>, your go-to recipe companion for effortless
+      record-keeping. Designed with busy wives and mothers in mind, our app
+      simplifies the art of organizing and recalling your favorite recipes.</p>
+      <p>Easily document the dishes you prepare for special occasions, creating a
+      personalized culinary archive. With a straightforward interface, <span class="brand">ReciPen</span> makes it a breeze to revisit and recreate those cherished recipes,
+      transforming every meal into a delightful memory.</p><p>Streamline your cooking
+      journey and savor the convenience of having your go-to recipes at your
+      fingertips.</p><p>Welcome to stress-free and organized meal planning with <span class="brand">ReciPen</span>.
+    </p>
+</div>
 </template>
 <style scoped>
     section{

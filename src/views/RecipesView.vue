@@ -2,6 +2,7 @@
 import { ref, onBeforeMount } from "vue";
 import HeroSection from "../components/HeroSection.vue";
 import RecipeCard from "../components/RecipeCard.vue";
+import Loader from "../components/Loader.vue";
 import { recipeService } from "../service/recipeService";
 
 onBeforeMount(async () => {
@@ -16,8 +17,11 @@ const recipes = ref();
 <template>
   <HeroSection />
   <section class="container">
-    <div class="card-container">
+    <div v-if="recipes" class="card-container">
       <RecipeCard :recipe="recipe" v-for="recipe in recipes" />
+    </div>
+    <div v-else>
+      <Loader />
     </div>
   </section>
 </template>
