@@ -99,6 +99,11 @@ onMounted(() => {
 .card .card__title {
   font-family: var(--heading-font);
   color: var(--primary);
+  cursor: pointer;
+}
+
+.card .card__title:hover h2 {
+  color: var(--accent);
 }
 
 .card .card__header {

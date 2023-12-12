@@ -6,13 +6,13 @@ import { recipeService } from "../service/recipeService";
 const route = useRoute()
 const recipeId = route.params.id;
 const recipeData = ref();
-const fetchedRecipesFromAPI = ref();
+const fetchedRecipeFromAPI = ref();
 
 onBeforeMount(async () => {
   try {
-    fetchedRecipesFromAPI.value = await recipeService.getRecipe(parseInt(recipeId));
-    const fetchedRecipes = JSON.parse(JSON.stringify(fetchedRecipesFromAPI.value));
-    recipeData.value = fetchedRecipes;
+    fetchedRecipeFromAPI.value = await recipeService.getRecipe(recipeId);
+    const fetchedRecipe = JSON.parse(JSON.stringify(fetchedRecipeFromAPI.value));
+    recipeData.value = fetchedRecipe;
   } catch (error) {
     console.error('Error loading data:', error);
   }

@@ -9,9 +9,10 @@ import {
   onMounted,
 } from "vue";
 
-import {v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import { recipeService } from "../service/recipeService";
 
-const emit = defineEmits(["dataSubmitted"]);
+const emit = defineEmits(["recipeSubmitted"]);
 const props = defineProps(["editData", "isEditModeOn"]);
 
 /* local state recipe var */
@@ -106,28 +107,27 @@ const filterEmptySteps = () => {
 // Function to handle spice and sugar levels
 const handleSpiceAndSugarLevels = () => {
   // If recipe category is Dessert then spice level is null otherwise sugar level is null
-  if(selectedCategory.value !== 'Dessert'){
+  if (selectedCategory.value !== "Dessert") {
     selectedSugarLevel.value = "";
-  }else{
+  } else {
     selectedSpiceLevel.value = "";
   }
-}
+};
 
 const getCustomFullDate = () => {
-    const currentDate = new Date();
-    const day = currentDate.getDate();
-    const month = currentDate.getMonth() + 1;
-    const year = currentDate.getFullYear();
-    return `${day}/${month}/${year}`;
-}
-
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1;
+  const year = currentDate.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 
 // Function to handle pre submit checks - validation
 const handlePreSubmitChecks = () => {
-    filterEmptyIngredients();
-    filterEmptySteps();
-    handleSpiceAndSugarLevels();
-}
+  filterEmptyIngredients();
+  filterEmptySteps();
+  handleSpiceAndSugarLevels();
+};
 
 // Functio to handle after submit checks - default state
 const handleAfterSubmitChecks = () => {
@@ -143,7 +143,7 @@ const handleAfterSubmitChecks = () => {
   selectedSugarLevel.value = "";
   chef.value = "";
   occasion.value = "";
-}
+};
 
 // Function to handle edit form coming from the RecipeDetail component
 watchEffect(() => {
@@ -157,13 +157,23 @@ watchEffect(() => {
   }
 });
 
-const submitForm = () => {
-  let dataToSubmit;
-  if (!name.value || !desc.value) {
+const submitForm = async () => {
+  let recipeToSubmit;
+  if (
+    !name.value ||
+    !desc.value ||
+    !ingredients.value ||
+    !steps.value ||
+    !selectedCategory.value ||
+    !prepTime.value ||
+    !cookTime.value ||
+    !chef.value ||
+    !occasion.value
+  ) {
     return;
   } else if (props.isEditModeOn === false) {
     handlePreSubmitChecks();
-    dataToSubmit = {
+    recipeToSubmit = {
       id: uuidv4(),
       date: getCustomFullDate(),
       name: name.value,
@@ -181,10 +191,10 @@ const submitForm = () => {
     };
   } else {
     handlePreSubmitChecks();
-    dataToSubmit = {
-      //id: props.editData.id,
-      id: uuidv4(),
-      date: getCustomFullDate(), //not required in edit mode
+    recipeToSubmit = {
+      id: props.editData.id,
+      //id: uuidv4(),
+      //date: getCustomFullDate(), //not required in edit mode
       name: name.value,
       desc: desc.value,
       isFav: isFav.value,
@@ -199,8 +209,10 @@ const submitForm = () => {
       occasion: occasion.value,
     };
   }
-  //emit("dataSubmitted", dataToSubmit);
-  localRecipe.value = dataToSubmit; // Local state has submitted data
+  
+  localRecipe.value = recipeToSubmit; // Local state has submitted data
+  emit("recipeSubmitted", recipeToSubmit);
+  //await recipeService.saveRecipe(dataToSubmit);
 
   // Clear values to default after form submits
   handleAfterSubmitChecks();
@@ -241,22 +253,22 @@ const submitForm = () => {
           <label>Recipe ingredients: e.g(Salt, 1 tsp)</label>
           <div v-for="(ingredient, index) in editedIngredients" :key="index">
             <div class="repeater-flex">
-                <label class="sub-label">Ingredient name</label>
-            <input
-              v-model.trim="ingredient.name"
-              type="text"
-              ref="ingredientInputs"
-              placeholder="Enter ingredient"
-            />
+              <label class="sub-label">Ingredient name</label>
+              <input
+                v-model.trim="ingredient.name"
+                type="text"
+                ref="ingredientInputs"
+                placeholder="Enter ingredient"
+              />
             </div>
             <div class="repeater-flex">
-            <label class="sub-label">Ingredient quantity</label>
-            <input
-              v-model.trim="ingredient.qty"
-              type="text"
-              ref="ingredientInputs"
-              placeholder="Enter qty"
-            />
+              <label class="sub-label">Ingredient quantity</label>
+              <input
+                v-model.trim="ingredient.qty"
+                type="text"
+                ref="ingredientInputs"
+                placeholder="Enter qty"
+              />
             </div>
             <span class="mt-185" type="button" @click="removeIngredient(index)"
               ><font-awesome-icon
@@ -312,7 +324,7 @@ const submitForm = () => {
       </div>
 
       <!-- Spice Level-->
-      <div v-if="selectedCategory !== 'Dessert' " class="form-subsection">
+      <div v-if="selectedCategory !== 'Dessert'" class="form-subsection">
         <label for="selectSpiceLevel">Choose a spice level:</label>
         <select v-model="selectedSpiceLevel" id="selectSpiceLevel">
           <option value="" disabled>Low, Medium, High, Extreme</option>
@@ -324,7 +336,7 @@ const submitForm = () => {
       </div>
 
       <!-- Sugar Level-->
-      <div v-if="selectedCategory === 'Dessert' " class="form-subsection">
+      <div v-if="selectedCategory === 'Dessert'" class="form-subsection">
         <label for="selectSugarLevel">Choose a sugar level:</label>
         <select v-model="selectedSugarLevel" id="selectSugarLevel">
           <option value="" disabled>Low, Medium, High</option>
@@ -334,22 +346,18 @@ const submitForm = () => {
         </select>
       </div>
 
-            <!-- Prep and Cook Time-->
-            <div class="form-subsection">
+      <!-- Prep and Cook Time-->
+      <div class="form-subsection">
         <label>How much time to prep and cook? e.g(5 mins)</label>
         <div class="row">
-            <div>
-                <label class="sub-label">Time to prep</label>
-          <input
-            type="text"
-            v-model="prepTime"
-            placeholder="15 mins"
-          /></div>
-            <div>
-                <label class="sub-label">Time to cook</label>
-                <input type="text" v-model="cookTime" placeholder="1 hr" />
-            </div>
-          
+          <div>
+            <label class="sub-label">Time to prep</label>
+            <input type="text" v-model="prepTime" placeholder="15 mins" />
+          </div>
+          <div>
+            <label class="sub-label">Time to cook</label>
+            <input type="text" v-model="cookTime" placeholder="1 hr" />
+          </div>
         </div>
       </div>
 
@@ -421,11 +429,11 @@ input[type="checkbox"] + label {
   cursor: pointer;
 }
 
-form label.sub-label{
-    font-weight: 400;
+form label.sub-label {
+  font-weight: 400;
 }
-.mt-185{
-    margin-top: 1.85rem;
+.mt-185 {
+  margin-top: 1.85rem;
 }
 
 .form-subsection {
@@ -478,12 +486,10 @@ form label.sub-label{
 } */
 
 .row div {
-    width: calc(50% - 4px);
-    display: flex;
-    flex-direction: column;
+  width: calc(50% - 4px);
+  display: flex;
+  flex-direction: column;
 }
-
-
 
 .repeater {
   display: flex;
@@ -508,15 +514,15 @@ form label.sub-label{
   flex: 1;
 }
 
-.repeater .repeater-flex{
-    flex-direction: column;
-    align-items: start;
-    margin-top: 0.25rem;
+.repeater .repeater-flex {
+  flex-direction: column;
+  align-items: start;
+  margin-top: 0.25rem;
 }
 
-.repeater .repeater-flex input{
-    flex: auto;
-    width: calc(100% - 12px);
+.repeater .repeater-flex input {
+  flex: auto;
+  width: calc(100% - 12px);
 }
 
 button {
@@ -535,19 +541,18 @@ button:hover {
   background-color: var(--green-light);
 }
 
-button.submit-btn{
-    margin-block: 1.5rem;
+button.submit-btn {
+  margin-block: 1.5rem;
 }
 
+@media (max-width: 767px) {
+  .repeater .form-subsection.double-inputs div {
+    flex-direction: column;
+  }
 
-@media(max-width: 767px){
-    .repeater .form-subsection.double-inputs div{
-        flex-direction: column;
-    }
-
-    .repeater .form-subsection.double-inputs div .mt-185{
-        margin: 0.25rem;
-        align-self: start;
-    }
+  .repeater .form-subsection.double-inputs div .mt-185 {
+    margin: 0.25rem;
+    align-self: start;
+  }
 }
 </style>
