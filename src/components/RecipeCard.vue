@@ -89,11 +89,8 @@ onMounted(() => {
   padding: 1.25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px dashed var(--light-grey);
-  border-radius: 15px;
+  border-radius: 5px;
   flex: 1; /* Cards will take equal width within the flex container */
-  /*width: 33%;
-  max-width: calc(33.333% - 16px); /* Adjust the max-width based on your preferences */
-  margin: 8px; /* Adjust margin as needed */
 }
 
 .card .card__title {

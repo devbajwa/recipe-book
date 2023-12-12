@@ -26,6 +26,7 @@ const recipes = ref();
 .card-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  gap: 1.125rem;
 }
 
 /* Media query for smaller screens */

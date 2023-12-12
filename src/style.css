@@ -60,6 +60,19 @@ section.subhero {
   margin-bottom: 1rem;
 }
 
+.intro{
+  padding: 1rem 1.75rem;
+  background: var(--light-grey);
+  border-radius: 5px;
+  margin-block: 1.85rem;
+  font-size: 1.125rem;
+}
+
+.brand{
+ color: var(--primary);
+ font-weight: bold;
+}
+
 footer {
   background-color: var(--dark-grey);
   color: var(--smoke-white);

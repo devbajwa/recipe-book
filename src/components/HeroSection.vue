@@ -15,8 +15,9 @@
         height: 325px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        /* justify-content: center; */
         color: #ffffff; /* Set text color to white or a contrasting color */
+        max-width: calc(1200px - 2rem);
     }
     section img{
         max-width: 100%;
