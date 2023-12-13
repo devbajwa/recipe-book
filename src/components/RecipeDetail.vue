@@ -10,11 +10,18 @@ const fetchedRecipeFromAPI = ref();
 
 onBeforeMount(async () => {
   try {
-    fetchedRecipeFromAPI.value = await recipeService.getRecipe(recipeId);
-    const fetchedRecipe = JSON.parse(
-      JSON.stringify(fetchedRecipeFromAPI.value)
+    //fetchedRecipeFromAPI.value = await recipeService.getRecipe(recipeId);
+    fetchedRecipeFromAPI.value = await recipeService.getFirestoreRecipe(
+      recipeId
     );
-    recipeData.value = fetchedRecipe;
+    // const fetchedRecipe = JSON.parse(
+    //   JSON.stringify(fetchedRecipeFromAPI.value)
+    // );
+    //recipeData.value = fetchedRecipe;
+    recipeData.value = {
+      id: fetchedRecipeFromAPI.value.id,
+      data: fetchedRecipeFromAPI.value.data(),
+    };
   } catch (error) {
     console.error("Error loading data:", error);
   }
@@ -22,10 +29,11 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-    <section class="subhero">
-        <h1>{{ recipeData.name }}</h1>
-    </section>
-    <section class="container">
-        {{ recipeData }}
-    </section>
+  <section class="subhero">
+    <!-- <h1>{{ recipeData.name }}</h1> -->
+    <h1>{{ recipeData.data.name }}</h1>
+  </section>
+  <section class="container">
+    {{ recipeData }}
+  </section>
 </template>

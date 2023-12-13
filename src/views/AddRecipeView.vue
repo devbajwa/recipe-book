@@ -14,6 +14,7 @@ const handleSubmitRecipe = async (recipeToSubmit) => {
   try {
     recipes.value.push(recipeToSubmit);
     await recipeService.saveRecipe(recipes.value); // Saving data into file via API
+    await recipeService.addFirestoreRecipe(recipeToSubmit);
   } catch (error) {
     console.error("Error saving data:", error);
   }

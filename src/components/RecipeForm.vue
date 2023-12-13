@@ -11,6 +11,10 @@ import {
 
 import { v4 as uuidv4 } from "uuid";
 
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
+
 const emit = defineEmits(["recipeSubmitted"]);
 const props = defineProps(["editData", "isEditModeOn"]);
 
@@ -162,11 +166,12 @@ const submitForm = async () => {
     !chef.value ||
     !occasion.value
   ) {
+    toast.error("Please check the form");
     return;
   } else if (props.isEditModeOn === false) {
     handlePreSubmitChecks();
     recipeToSubmit = {
-      id: uuidv4(),
+      //id: uuidv4(),
       date: getCustomFullDate(),
       name: name.value,
       desc: desc.value,
@@ -205,7 +210,7 @@ const submitForm = async () => {
 
   localRecipe.value = recipeToSubmit; // Local state has submitted data for testing only
   emit("recipeSubmitted", recipeToSubmit); // Emitting the event with recipe to submit via api, see the AddRecipeView.vue
-
+  toast.success("Recipe submitted successfully");
   // Clear values to default after form submits
   handleAfterSubmitChecks();
 };
@@ -234,7 +239,13 @@ const submitForm = async () => {
       </div>
       <div class="form-subsection">
         <div class="row">
-          <input type="checkbox" id="isFav" value="Favourite" v-model="isFav" />
+          <input
+            type="checkbox"
+            id="isFav"
+            value="Favourite"
+            v-model="isFav"
+            class="custom-checkbox"
+          />
           <label for="isFav">Is this your favourite recipe?</label>
         </div>
       </div>
@@ -262,7 +273,7 @@ const submitForm = async () => {
                 placeholder="Enter qty"
               />
             </div>
-            <span class="mt-185" type="button" @click="removeIngredient(index)"
+            <span class="mt-2" type="button" @click="removeIngredient(index)"
               ><font-awesome-icon
                 icon="fa-solid fa-circle-xmark"
                 class="close-mark"
@@ -379,7 +390,7 @@ textarea,
 input,
 select {
   font-family: var(--main-font);
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 form {
   display: flex;
@@ -389,18 +400,22 @@ form {
   margin: auto;
 }
 
-input[type="text"] {
-  height: 2rem;
+input[type="text"], select {
+  height: 2.5rem;
 }
 
 textarea {
-  height: 4rem;
+  height: 6rem;
+}
+
+select{
+  cursor: pointer;
 }
 
 input[type="text"],
 textarea,
 select {
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   border: 1px solid var(--primary);
 }
 
@@ -424,8 +439,8 @@ input[type="checkbox"] + label {
 form label.sub-label {
   font-weight: 400;
 }
-.mt-185 {
-  margin-top: 1.85rem;
+.mt-2 {
+  margin-top: 2rem;
 }
 
 .form-subsection {
@@ -514,7 +529,50 @@ form label.sub-label {
 
 .repeater .repeater-flex input {
   flex: auto;
-  width: calc(100% - 12px);
+  width: calc(100% - 18px);
+}
+
+/** CUSTOM CHECKBOX */
+/* Define custom checkbox style */
+.custom-checkbox {
+  display: none;
+}
+
+.custom-checkbox + label {
+  position: relative;
+  padding-left: 34px;
+  cursor: pointer;
+  line-height: 28px;
+}
+
+.custom-checkbox + label:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--primary);
+  background-color: #fff;
+}
+
+.custom-checkbox:checked + label:before {
+  background: var(--green-light);
+  border: 2px solid #fff;
+}
+
+.custom-checkbox-checked + label:after,
+.custom-checkbox:checked + label:after {
+  content: "";
+  border: 2px solid var(--primary);
+  background: rgba(0, 0, 0, 0)
+    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAATCAYAAAB/TkaLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADASURBVHgBrZQBDYMwEEX/pgAJSKiESUDCHGwOioNNAg6QgAQkVMIk3O6yLtnKFejRl1wIbf5rm14KVICIGq4basLCkT541EBE9I8/4wAsuPOnT4ZPsMLCCy15wgqHW66QCEdYyQjlv4EVDs+KsIUVDj+KhFurKa0juLWA43rlmpfHO0V43SP84tMTJPNCj41jTcou/I8wFAljUB6DWRMrwgF7ieKJ1pGFy3tRdpIRBjrYi0NVoSKWW3eoRRR3MPAGpTbQQtH+cC8AAAAASUVORK5CYII=)
+    no-repeat;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 22px;
+  width: 22px;
 }
 
 button {
@@ -542,7 +600,7 @@ button.submit-btn {
     flex-direction: column;
   }
 
-  .repeater .form-subsection.double-inputs div .mt-185 {
+  .repeater .form-subsection.double-inputs div .mt-2 {
     margin: 0.25rem;
     align-self: start;
   }

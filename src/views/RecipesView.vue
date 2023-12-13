@@ -6,7 +6,8 @@ import Loader from "../components/Loader.vue";
 import { recipeService } from "../service/recipeService";
 
 onBeforeMount(async () => {
-  const fetchedRecipesFromAPI = await recipeService.getRecipes();
+  //const fetchedRecipesFromAPI = await recipeService.getRecipes();
+  const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
   console.log(fetchedRecipesFromAPI);
 
   recipes.value = fetchedRecipesFromAPI;
@@ -31,6 +32,7 @@ const recipes = ref();
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.125rem;
+  margin-block-end: 3rem;
 }
 
 /* Media query for smaller screens */

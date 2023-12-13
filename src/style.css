@@ -77,5 +77,5 @@ footer {
   background-color: var(--dark-grey);
   color: var(--smoke-white);
   flex-shrink: 0;
-  margin-top: 2.5rem;
+  margin-top: auto;
 }
