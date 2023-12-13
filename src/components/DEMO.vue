@@ -10,7 +10,7 @@ import {
   getDoc,
   addDoc,
   setDoc,
-  deleteDoc
+  deleteDoc,
 } from "firebase/firestore";
 
 import { recipeService } from "../service/recipeService";
@@ -34,52 +34,49 @@ onMounted(async () => {
   const querySnapshot2 = await getDoc(q);
   console.log(querySnapshot2.id, " => ", querySnapshot2.data());
 
-//Add a new document with a generated id.
-// const docRef = await addDoc(collection(firebase.db, "recipes"), {
-//     name: "Nihari",
-//     desc: "Behtreen cheez"
-// },);
-// console.log("Document written with ID: ", docRef.id);
+  //Add a new document with a generated id.
+  // const docRef = await addDoc(collection(firebase.db, "recipes"), {
+  //     name: "Nihari",
+  //     desc: "Behtreen cheez"
+  // },);
+  // console.log("Document written with ID: ", docRef.id);
 
-const toBeDeleted = ["4WLb0ik4W2Ou9d905iOG"];
+  const toBeDeleted = ["4WLb0ik4W2Ou9d905iOG"];
 
-toBeDeleted.forEach(async item => {
+  toBeDeleted.forEach(async (item) => {
     await deleteDoc(doc(firebase.db, "recipes", item));
-})
+  });
 
+  // firestore as service
 
- // firestore as service
-
- // fetch all recipes
+  // fetch all recipes
   const fbData = await recipeService.getFirestoreRecipes();
   // add a recipe
-//   await recipeService.addFirestoreRecipe({
-//         name: "Nihari",
-//         desc: "Behtreen cheez"
-//     });
-    
-     
+  //   await recipeService.addFirestoreRecipe({
+  //         name: "Nihari",
+  //         desc: "Behtreen cheez"
+  //     });
 });
 
-onBeforeMount(async ()=>{
-    // get single recipe with id
-    const singleData = await recipeService.getFirestoreRecipe("XDA5FnromKFX4a3pa7iM")
-    singleRecipe.value = {id: singleData.id, data: singleData.data()};
-    //console.log(JSON.parse(JSON.stringify(singleRecipe.value)));
-})
+onBeforeMount(async () => {
+  // get single recipe with id
+  const singleData = await recipeService.getFirestoreRecipe(
+    "XDA5FnromKFX4a3pa7iM"
+  );
+  singleRecipe.value = { id: singleData.id, data: singleData.data() };
+  //console.log(JSON.parse(JSON.stringify(singleRecipe.value)));
+});
 </script>
 <template>
   <h1>Hi from DEMO</h1>
   <div v-if="singleRecipe">
-  {{ singleRecipe.id }}
-   {{ singleRecipe.data.name }}
+    {{ singleRecipe.id }}
+    {{ singleRecipe.data.name }}
   </div>
-<div v-else>
-    Fetching...
-</div>
+  <div v-else>Fetching...</div>
   <ul>
     <li v-for="recipe in recipes">
-        <h3>Recipe for</h3>
+      <h3>Recipe for</h3>
       {{ recipe.name }}
       <h3>Ingredients</h3>
       <ol>
@@ -99,7 +96,7 @@ onBeforeMount(async ()=>{
       {{ recipe.prepTime }}
       <h3>Cook Time</h3>
       {{ recipe.cookTime }}
-      <h3 v-if="recipe.spiceLevel"> Spice Level</h3>
+      <h3 v-if="recipe.spiceLevel">Spice Level</h3>
       {{ recipe.spiceLevel }}
       <h3 v-if="recipe.sugarLevel">Sugar Level</h3>
       {{ recipe.sugarLevel }}
