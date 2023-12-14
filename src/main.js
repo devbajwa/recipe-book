@@ -9,13 +9,13 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons Solid*/
-import { faUtensils, faBowlFood, faHeart as faHeartSolid, faMortarPestle, faFireFlameCurved, faPepperHot, faCircleXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faUtensils, faBowlFood, faHeart as faHeartSolid, faMortarPestle, faFireFlameCurved, faPepperHot, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faBowlRice, faUser, faCaretRight } from '@fortawesome/free-solid-svg-icons'
 
 /* import specific icons Regular*/
-import { faClock, faCalendar, faHeart as faHeartRegular, faEdit } from '@fortawesome/free-regular-svg-icons'
+import { faClock, faCalendar, faHeart as faHeartRegular, faEdit, faFaceSmile } from '@fortawesome/free-regular-svg-icons'
 
 /* add icons to the library */
-library.add(faClock, faCalendar, faUtensils, faBowlFood, faHeartSolid, faHeartRegular, faMortarPestle, faFireFlameCurved, faPepperHot, faEdit, faCircleXmark, faPlus)
+library.add(faClock, faCalendar, faUtensils, faBowlFood, faHeartSolid, faHeartRegular, faMortarPestle, faFireFlameCurved, faPepperHot, faEdit, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faFaceSmile, faBowlRice, faUser, faCaretRight)
 
 /* import vue-toastificaiton */
 import Toast from "vue-toastification"

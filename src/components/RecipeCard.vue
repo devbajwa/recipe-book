@@ -73,10 +73,10 @@ onMounted(() => {
     </div>
     <div class="card__footer">
       <span v-if="recipe.isFav">
-        <font-awesome-icon icon="fa-solid fa-heart" />
+        <font-awesome-icon icon="fa-solid fa-heart" class="fav-btn" />
       </span>
       <span v-else>
-        <font-awesome-icon icon="fa-regular fa-heart" />
+        <font-awesome-icon icon="fa-regular fa-heart" class="fav-btn" />
       </span>
     </div>
   </div>
@@ -129,30 +129,5 @@ onMounted(() => {
   .card {
     max-width: calc(100% - 16px);
   }
-}
-
-/* Font Awesome */
-.svg-inline--fa {
-  color: var(--primary);
-  width: 1rem;
-}
-
-.card .card__footer .svg-inline--fa {
-  color: var(--accent);
-  font-size: 1.55rem;
-  cursor: pointer;
-}
-
-.svg-inline--fa.low {
-  color: var(--primary);
-}
-.svg-inline--fa.medium {
-  color: var(--amber);
-}
-.svg-inline--fa.high {
-  color: var(--accent);
-}
-.svg-inline--fa.extreme {
-  color: red;
 }
 </style>

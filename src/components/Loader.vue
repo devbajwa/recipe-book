@@ -1,5 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
+
+defineProps(["text"]);
 //const empty = document.querySelector("#empty");
 const icoLow =
   '<font-awesome-icon icon="fa-solid fa-pepper-hot" class="low" />';
@@ -22,30 +24,28 @@ onMounted(() => {
   const icons = [empty, icoLow, icoMedium, icoHigh, icoExtreme];
 
   const currentIconIndex = ref(0);
-  
+
   setInterval(() => {
-    if(currentIconIndex.value < icons.length){
-        icons[currentIconIndex.value].style.display = "block";
-        currentIconIndex.value++;
-    }else{
-        currentIconIndex.value = 0;
-        hideIcons();
+    if (currentIconIndex.value < icons.length) {
+      icons[currentIconIndex.value].style.display = "block";
+      currentIconIndex.value++;
+    } else {
+      currentIconIndex.value = 0;
+      hideIcons();
     }
-    
   }, 500);
 
-
   const hideIcons = () => {
-    icons.map(ico => ico.style.display = "none");
-  }
+    icons.map((ico) => (ico.style.display = "none"));
+  };
 });
 </script>
 
 <template>
   <div class="recipe-loader">
     <div class="loading-content">
-        <div class="loading-text">
-        <h4>Loading recipes...</h4>
+      <div class="loading-text">
+        <h4>{{ text }}</h4>
       </div>
       <div class="loading-icons">
         <font-awesome-icon icon="fa-solid fa-pepper-hot" class="" id="empty" />
@@ -70,7 +70,6 @@ onMounted(() => {
           id="icoExtreme"
         />
       </div>
-
     </div>
   </div>
 </template>

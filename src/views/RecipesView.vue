@@ -1,3 +1,9 @@
+<!--
+  Author: Waqas,
+  File: RecipesView.vue,
+  Desc: This component fetch all recipes from firestore.
+        Then pass the recipes in a for loop as a prop to Recipe Card component which render the recipe key details.
+-->
 <script setup>
 import { ref, onBeforeMount } from "vue";
 import HeroSection from "../components/HeroSection.vue";
@@ -6,10 +12,8 @@ import Loader from "../components/Loader.vue";
 import { recipeService } from "../service/recipeService";
 
 onBeforeMount(async () => {
-  //const fetchedRecipesFromAPI = await recipeService.getRecipes();
+  // Fetch all the recipes from firestore via service api
   const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
-  console.log(fetchedRecipesFromAPI);
-
   recipes.value = fetchedRecipesFromAPI;
 });
 
@@ -22,7 +26,7 @@ const recipes = ref();
       <RecipeCard :recipe="recipe" v-for="recipe in recipes" />
     </div>
     <div v-else>
-      <Loader />
+      <Loader :text="'Fetching recipes...'" />
     </div>
   </section>
 </template>

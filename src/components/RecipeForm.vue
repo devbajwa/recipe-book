@@ -345,7 +345,7 @@ const submitForm = async () => {
           <option value="" disabled></option>
           <option value="None">None</option>
           <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
+          <option value="Mild">Mild</option>
           <option value="High">High</option>
           <option value="Extreme">Extreme</option>
         </select>
@@ -368,7 +368,7 @@ const submitForm = async () => {
           <option value="" disabled></option>
           <option value="None">None</option>
           <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
+          <option value="Mild">Mild</option>
           <option value="High">High</option>
         </select>
       </div>
