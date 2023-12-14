@@ -146,11 +146,11 @@ onMounted(() => {
 
 .sub-heading {
   position: relative;
-  padding-left: 0.85rem;
+  /* padding-left: 0.85rem; */
   color: var(--primary);
 }
 
-.sub-heading::before {
+/* .sub-heading::before {
   content: "";
   background: var(--green-light);
   width: 5px;
@@ -160,7 +160,7 @@ onMounted(() => {
   left: -0.25rem;
   transform: translate(50%, 50%);
   border-radius: 5px;
-}
+} */
 
 .card {
   display: grid;
