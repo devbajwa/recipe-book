@@ -9,8 +9,6 @@ import {
   onMounted,
 } from "vue";
 
-import { v4 as uuidv4 } from "uuid";
-
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
@@ -38,6 +36,7 @@ const selectedSpiceLevel = ref("");
 const selectedSugarLevel = ref("");
 const chef = ref("");
 const occasion = ref("");
+const serveSize = ref("");
 
 /* INGREDIENTS - Function to handle add ingredinet input on the form */
 const addIngredient = () => {
@@ -103,10 +102,11 @@ const filterEmptySteps = () => {
 // Function to handle spice and sugar levels
 const handleSpiceAndSugarLevels = () => {
   // If recipe category is Dessert then spice level is null otherwise sugar level is null
-  if (selectedCategory.value !== "Dessert") {
-    selectedSugarLevel.value = "";
-  } else {
-    selectedSpiceLevel.value = "";
+  if (selectedCategory.value === "Dessert") {
+    selectedSpiceLevel.value = "None";
+  }
+  if (selectedCategory.value === "Curry") {
+    selectedSugarLevel.value = "None";
   }
 };
 
@@ -139,6 +139,7 @@ const handleAfterSubmitChecks = () => {
   selectedSugarLevel.value = "";
   chef.value = "";
   occasion.value = "";
+  serveSize.value = "";
 };
 
 // Function to handle edit form coming from the RecipeDetail component
@@ -164,7 +165,8 @@ const submitForm = async () => {
     !prepTime.value ||
     !cookTime.value ||
     !chef.value ||
-    !occasion.value
+    !occasion.value ||
+    !serveSize.value
   ) {
     toast.error("Please check the form");
     return;
@@ -185,6 +187,7 @@ const submitForm = async () => {
       sugarLevel: selectedSugarLevel.value,
       chef: chef.value,
       occasion: occasion.value,
+      serve: serveSize.value,
     };
   } else {
     // This is for editing
@@ -205,12 +208,13 @@ const submitForm = async () => {
       sugarLevel: selectedSugarLevel.value,
       chef: chef.value,
       occasion: occasion.value,
+      serve: serveSize.value,
     };
   }
 
   localRecipe.value = recipeToSubmit; // Local state has submitted data for testing only
   emit("recipeSubmitted", recipeToSubmit); // Emitting the event with recipe to submit via api, see the AddRecipeView.vue
-  toast.success("Recipe submitted successfully");
+  toast.success("Recipe submitted successfully!");
   // Clear values to default after form submits
   handleAfterSubmitChecks();
 };
@@ -317,20 +321,27 @@ const submitForm = async () => {
       <!-- Category-->
       <div class="form-subsection">
         <label for="selectCategory">Choose a category:</label>
+        <label class="sub-label"
+          >Curry, Rice, Snack, Dessert, Salad, Beverage</label
+        >
         <select v-model="selectedCategory" id="selectCategory">
-          <option value="" disabled>Curry, Rice, Snack, Dessert</option>
+          <option value="" disabled></option>
           <option value="Curry">Curry</option>
           <option value="Rice">Rice</option>
           <option value="Snack">Snack</option>
           <option value="Dessert">Dessert</option>
+          <option value="Salad">Salad</option>
+          <option value="Beverage">Beverage</option>
         </select>
       </div>
 
       <!-- Spice Level-->
       <div v-if="selectedCategory !== 'Dessert'" class="form-subsection">
         <label for="selectSpiceLevel">Choose a spice level:</label>
+        <label class="sub-label">None, Low, Medium, High, Extreme</label>
         <select v-model="selectedSpiceLevel" id="selectSpiceLevel">
-          <option value="" disabled>Low, Medium, High, Extreme</option>
+          <option value="" disabled></option>
+          <option value="None">None</option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
@@ -339,10 +350,21 @@ const submitForm = async () => {
       </div>
 
       <!-- Sugar Level-->
-      <div v-if="selectedCategory === 'Dessert'" class="form-subsection">
+      <div
+        v-if="
+          selectedCategory === 'Dessert' ||
+          selectedCategory === 'Rice' ||
+          selectedCategory === 'Snack' ||
+          selectedCategory === 'Beverage' ||
+          selectedCategory === 'Salad'
+        "
+        class="form-subsection"
+      >
         <label for="selectSugarLevel">Choose a sugar level:</label>
+        <label class="sub-label">None, Low, Medium, High</label>
         <select v-model="selectedSugarLevel" id="selectSugarLevel">
-          <option value="" disabled>Low, Medium, High</option>
+          <option value="" disabled></option>
+          <option value="None">None</option>
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
@@ -364,11 +386,27 @@ const submitForm = async () => {
         </div>
       </div>
 
+      <!-- Serve size -->
+      <div class="form-subsection">
+        <label>What is the serve size? e.g(2 people)</label>
+        <div class="row">
+          <input
+            type="number"
+            min="1"
+            max="100"
+            v-model="serveSize"
+            placeholder="2"
+            class="mini-input"
+          />people.
+        </div>
+      </div>
+
       <!-- Occasion-->
       <div class="form-subsection">
         <label>Which occasion suits best for this recipe?</label>
-        <input type="text" v-model="occasion" placeholder="Enter occasion" />
+        <input type="text" v-model="occasion" placeholder="Family weekend" />
       </div>
+
       <!-- Chef-->
       <div class="form-subsection">
         <label>Chef name</label>
@@ -400,7 +438,8 @@ form {
   margin: auto;
 }
 
-input[type="text"], select {
+input[type="text"],
+select {
   height: 2.5rem;
 }
 
@@ -408,11 +447,12 @@ textarea {
   height: 6rem;
 }
 
-select{
+select {
   cursor: pointer;
 }
 
 input[type="text"],
+input[type="number"],
 textarea,
 select {
   padding: 0.25rem 0.5rem;
@@ -420,12 +460,14 @@ select {
 }
 
 input[type="text"]:focus,
+input[type="number"]:focus,
 textarea:focus,
 select:focus {
   border: 1px solid var(--primary);
 }
 
 input[type="text"]:focus-visible,
+input[type="number"]:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: var(--primary) auto 2px;
@@ -441,6 +483,10 @@ form label.sub-label {
 }
 .mt-2 {
   margin-top: 2rem;
+}
+
+.mini-input {
+  width: 50px;
 }
 
 .form-subsection {
@@ -480,17 +526,10 @@ form label.sub-label {
 }
 
 .row {
-  /* align-self: baseline; */
   display: flex;
-  /* justify-content: space-between; */
   gap: 0.5rem;
   width: 100%;
 }
-/* 
-.row input[type="text"] {
-  width: 165px;
-  flex: 1;
-} */
 
 .row div {
   width: calc(50% - 4px);
@@ -561,7 +600,6 @@ form label.sub-label {
   border: 2px solid #fff;
 }
 
-.custom-checkbox-checked + label:after,
 .custom-checkbox:checked + label:after {
   content: "";
   border: 2px solid var(--primary);
@@ -599,7 +637,6 @@ button.submit-btn {
   .repeater .form-subsection.double-inputs div {
     flex-direction: column;
   }
-
   .repeater .form-subsection.double-inputs div .mt-2 {
     margin: 0.25rem;
     align-self: start;
