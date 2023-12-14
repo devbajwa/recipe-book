@@ -60,17 +60,18 @@ section.subhero {
   margin-bottom: 1rem;
 }
 
-.intro{
+.intro {
   padding: 1rem 1.75rem;
   background: var(--light-grey);
   border-radius: 5px;
   margin-block: 1.85rem;
   font-size: 1.125rem;
+  max-width: calc(1200px - 2.75rem);
 }
 
-.brand{
- color: var(--primary);
- font-weight: bold;
+.brand {
+  color: var(--primary);
+  font-weight: bold;
 }
 
 footer {
