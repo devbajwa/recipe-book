@@ -2,7 +2,9 @@
 import { ref, onBeforeMount } from "vue";
 import RecipeForm from "../components/RecipeForm.vue";
 import { recipeService } from "../service/recipeService";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const recipes = ref([]);
 
 onBeforeMount(async () => {
@@ -15,6 +17,7 @@ const handleSubmitRecipe = async (recipeToSubmit) => {
     recipes.value.push(recipeToSubmit);
     await recipeService.saveRecipe(recipes.value); // Saving data into file via API
     await recipeService.addFirestoreRecipe(recipeToSubmit);
+    router.push(`/`); // Back to recipes
   } catch (error) {
     console.error("Error saving data:", error);
   }

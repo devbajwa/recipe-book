@@ -11,8 +11,10 @@ import {
 
 import { useToast } from "vue-toastification";
 
+/* toastification messages */
 const toast = useToast();
 
+/* emitter and props */
 const emit = defineEmits(["recipeSubmitted"]);
 const props = defineProps(["editData", "isEditModeOn"]);
 
