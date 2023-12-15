@@ -47,6 +47,15 @@ body {
   padding: 1rem;
 }
 
+.row-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row-flex a {
+  color: var(--smoke-white);
+}
+
 section h1,
 .title {
   font-size: 2.125rem;
@@ -89,7 +98,8 @@ footer {
 
 .svg-inline--fa.fav-btn {
   color: var(--accent);
-  font-size: 1.55rem;
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
 }
 

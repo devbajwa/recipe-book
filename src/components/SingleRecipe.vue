@@ -46,58 +46,39 @@ onMounted(() => {
     <h2 class="sub-heading">Summary</h2>
     <div class="card recipe-detail__section">
       <div>
-        <font-awesome-icon icon="fa-solid fa-user" /><span
-          >Chef: {{ recipe.data.chef }}</span
-        >
+        <font-awesome-icon icon="fa-solid fa-user" /><span>Chef: {{ recipe.data.chef }}</span>
       </div>
       <div>
-        <font-awesome-icon icon="fa-solid fa-bowl-food" /><span
-          >Category: {{ recipe.data.category }}</span
-        >
+        <font-awesome-icon icon="fa-solid fa-bowl-food" /><span>Category: {{ recipe.data.category }}</span>
       </div>
       <div>
-        <font-awesome-icon icon="fa-solid fa-mortar-pestle" /><span
-          >Ingredients: {{ recipe.data.ingredients.length }}</span
-        >
+        <font-awesome-icon icon="fa-solid fa-mortar-pestle" /><span>Ingredients: {{ recipe.data.ingredients.length
+        }}</span>
       </div>
       <div>
-        <font-awesome-icon icon="fa-solid fa-utensils" /><span
-          >Prep time: {{ recipe.data.prepTime }}</span
-        >
+        <font-awesome-icon icon="fa-solid fa-utensils" /><span>Prep time: {{ recipe.data.prepTime }}</span>
       </div>
       <div>
-        <font-awesome-icon
-          icon="fa-solid fa-fire-flame-curved"
-          class="high"
-        /><span>Cook time: {{ recipe.data.cookTime }}</span>
+        <font-awesome-icon icon="fa-solid fa-fire-flame-curved" class="high" /><span>Cook time: {{ recipe.data.cookTime
+        }}</span>
       </div>
       <div>
-        <font-awesome-icon icon="fa-solid fa-bowl-rice" /><span
-          >Serve: {{ recipe.data.serve }} people</span
-        >
+        <font-awesome-icon icon="fa-solid fa-bowl-rice" /><span>Serve: {{ recipe.data.serve }} people</span>
       </div>
 
       <div>
-        <font-awesome-icon icon="fa-solid fa-cubes-stacked" /><span
-          >Sugar level: {{ recipe.data.sugarLevel }}</span
-        >
+        <font-awesome-icon icon="fa-solid fa-cubes-stacked" /><span>Sugar level: {{ recipe.data.sugarLevel }}</span>
       </div>
       <div>
-        <font-awesome-icon
-          icon="fa-solid fa-pepper-hot"
-          :class="spiceLevelClass"
-        /><span>Spice level: {{ recipe.data.spiceLevel }}</span>
+        <font-awesome-icon icon="fa-solid fa-pepper-hot" :class="spiceLevelClass" /><span>Spice level: {{
+          recipe.data.spiceLevel }}</span>
       </div>
 
       <div>
-        <font-awesome-icon icon="fa-solid fa-cake-candles" /><span
-          >Occasion: {{ recipe.data.occasion }}</span
-        >
+        <font-awesome-icon icon="fa-solid fa-cake-candles" /><span>Occasion: {{ recipe.data.occasion }}</span>
       </div>
       <div>
-        <font-awesome-icon icon="fa-regular fa-calendar" /><span
-          >Date added: {{ recipe.data.date }}</span
-        >
+        <font-awesome-icon icon="fa-regular fa-calendar" /><span>Date added: {{ recipe.data.date }}</span>
       </div>
     </div>
     <h2 class="sub-heading">Description</h2>
@@ -108,7 +89,7 @@ onMounted(() => {
       <div class="ingredients">
         <h2 class="sub-heading">Ingredients</h2>
         <ul class="list">
-          <li v-for="ingredient in recipe.data.ingredients">
+          <li v-for="ingredient in recipe.data.ingredients" :key="ingredient.name">
             <div class="row">
               <font-awesome-icon icon="fa-solid fa-caret-right" />
               <span>{{ ingredient.qty }} {{ ingredient.name }}</span>
@@ -119,7 +100,7 @@ onMounted(() => {
       <div class="method">
         <h2 class="sub-heading">Method</h2>
         <ul class="list">
-          <li v-for="step in recipe.data.steps">
+          <li v-for="step in recipe.data.steps" :key="step.step">
             <div class="row">
               <font-awesome-icon icon="fa-solid fa-caret-right" />
               <span>{{ step.step }}</span>
@@ -173,6 +154,7 @@ onMounted(() => {
   align-items: center;
   gap: 0.75rem;
 }
+
 .row {
   display: flex;
   align-items: baseline;
@@ -222,12 +204,15 @@ onMounted(() => {
 .svg-inline--fa.low {
   color: var(--primary);
 }
+
 .svg-inline--fa.mild {
   color: var(--amber);
 }
+
 .svg-inline--fa.high {
   color: var(--accent);
 }
+
 .svg-inline--fa.extreme {
   color: red;
 }
@@ -241,6 +226,7 @@ onMounted(() => {
     grid-template-columns: 1fr;
   }
 }
+
 @media (max-width: 568px) {
   .card {
     grid-template-columns: 1fr;

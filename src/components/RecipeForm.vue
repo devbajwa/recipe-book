@@ -227,31 +227,15 @@ const submitForm = async () => {
     <form @submit.prevent="submitForm">
       <div class="form-subsection">
         <label>Recipe name:</label>
-        <input
-          type="text"
-          id="text"
-          v-model.trim="name"
-          placeholder="Enter recipe name"
-        />
+        <input type="text" id="text" v-model.trim="name" placeholder="Enter recipe name" />
       </div>
       <div class="form-subsection">
         <label>Recipe description:</label>
-        <textarea
-          type="text"
-          id="desc"
-          v-model.trim="desc"
-          placeholder="Enter recipe description"
-        />
+        <textarea type="text" id="desc" v-model.trim="desc" placeholder="Enter recipe description" />
       </div>
       <div class="form-subsection">
         <div class="row">
-          <input
-            type="checkbox"
-            id="isFav"
-            value="Favourite"
-            v-model="isFav"
-            class="custom-checkbox"
-          />
+          <input type="checkbox" id="isFav" value="Favourite" v-model="isFav" class="custom-checkbox" />
           <label for="isFav">Is this your favourite recipe?</label>
         </div>
       </div>
@@ -263,35 +247,18 @@ const submitForm = async () => {
           <div v-for="(ingredient, index) in editedIngredients" :key="index">
             <div class="repeater-flex">
               <label class="sub-label">Ingredient name</label>
-              <input
-                v-model.trim="ingredient.name"
-                type="text"
-                ref="ingredientInputs"
-                placeholder="Enter ingredient"
-              />
+              <input v-model.trim="ingredient.name" type="text" ref="ingredientInputs" placeholder="Enter ingredient" />
             </div>
             <div class="repeater-flex">
               <label class="sub-label">Ingredient quantity</label>
-              <input
-                v-model.trim="ingredient.qty"
-                type="text"
-                ref="ingredientInputs"
-                placeholder="Enter qty"
-              />
+              <input v-model.trim="ingredient.qty" type="text" ref="ingredientInputs" placeholder="Enter qty" />
             </div>
-            <span class="mt-2" type="button" @click="removeIngredient(index)"
-              ><font-awesome-icon
-                icon="fa-solid fa-circle-xmark"
-                class="close-mark"
-            /></span>
+            <span class="mt-2" type="button" @click="removeIngredient(index)"><font-awesome-icon
+                icon="fa-solid fa-circle-xmark" class="close-mark" /></span>
           </div>
         </div>
         <button type="button" @click="addIngredient">
-          <span class="add-button"
-            ><font-awesome-icon icon="fa-solid fa-plus" /><span
-              >Add Ingredient</span
-            ></span
-          >
+          <span class="add-button"><font-awesome-icon icon="fa-solid fa-plus" /><span>Add Ingredient</span></span>
         </button>
       </div>
       <!-- Method -->
@@ -299,33 +266,19 @@ const submitForm = async () => {
         <div class="form-subsection">
           <label>Recipe method steps:</label>
           <div v-for="(method, index) in editedSteps" :key="index">
-            <textarea
-              v-model.trim="method.step"
-              type="text"
-              ref="stepInputs"
-              placeholder="Enter step"
-            />
-            <span type="button" @click="removeStep(index)"
-              ><font-awesome-icon
-                icon="fa-solid fa-circle-xmark"
-                class="close-mark"
-            /></span>
+            <textarea v-model.trim="method.step" type="text" ref="stepInputs" placeholder="Enter step" />
+            <span type="button" @click="removeStep(index)"><font-awesome-icon icon="fa-solid fa-circle-xmark"
+                class="close-mark" /></span>
           </div>
         </div>
         <button type="button" @click="addStep">
-          <span class="add-button"
-            ><font-awesome-icon icon="fa-solid fa-plus" /><span
-              >Add Step</span
-            ></span
-          >
+          <span class="add-button"><font-awesome-icon icon="fa-solid fa-plus" /><span>Add Step</span></span>
         </button>
       </div>
       <!-- Category-->
       <div class="form-subsection">
         <label for="selectCategory">Choose a category:</label>
-        <label class="sub-label"
-          >Curry, Rice, Snack, Dessert, Salad, Beverage</label
-        >
+        <label class="sub-label">Curry, Rice, Snack, Dessert, Salad, Beverage</label>
         <select v-model="selectedCategory" id="selectCategory">
           <option value="" disabled></option>
           <option value="Curry">Curry</option>
@@ -352,16 +305,12 @@ const submitForm = async () => {
       </div>
 
       <!-- Sugar Level-->
-      <div
-        v-if="
-          selectedCategory === 'Dessert' ||
-          selectedCategory === 'Rice' ||
-          selectedCategory === 'Snack' ||
-          selectedCategory === 'Beverage' ||
-          selectedCategory === 'Salad'
-        "
-        class="form-subsection"
-      >
+      <div v-if="selectedCategory === 'Dessert' ||
+        selectedCategory === 'Rice' ||
+        selectedCategory === 'Snack' ||
+        selectedCategory === 'Beverage' ||
+        selectedCategory === 'Salad'
+        " class="form-subsection">
         <label for="selectSugarLevel">Choose a sugar level:</label>
         <label class="sub-label">None, Low, Medium, High</label>
         <select v-model="selectedSugarLevel" id="selectSugarLevel">
@@ -392,14 +341,7 @@ const submitForm = async () => {
       <div class="form-subsection">
         <label>What is the serve size? e.g(2 people)</label>
         <div class="row">
-          <input
-            type="number"
-            min="1"
-            max="100"
-            v-model="serveSize"
-            placeholder="2"
-            class="mini-input"
-          />people.
+          <input type="number" min="1" max="100" v-model="serveSize" placeholder="2" class="mini-input" />people.
         </div>
       </div>
 
@@ -432,6 +374,7 @@ select {
   font-family: var(--main-font);
   font-size: 1.125rem;
 }
+
 form {
   display: flex;
   flex-direction: column;
@@ -476,13 +419,14 @@ select:focus-visible {
 }
 
 input[type="checkbox"],
-input[type="checkbox"] + label {
+input[type="checkbox"]+label {
   cursor: pointer;
 }
 
 form label.sub-label {
   font-weight: 400;
 }
+
 .mt-2 {
   margin-top: 2rem;
 }
@@ -507,6 +451,7 @@ form label.sub-label {
   cursor: pointer;
   font-size: 18px;
 }
+
 .svg-inline--fa.close-mark:hover {
   color: var(--dark-grey);
 }
@@ -553,6 +498,7 @@ form label.sub-label {
   align-items: center;
   width: 100%;
 }
+
 .repeater div input {
   width: 165px;
 }
@@ -579,14 +525,14 @@ form label.sub-label {
   display: none;
 }
 
-.custom-checkbox + label {
+.custom-checkbox+label {
   position: relative;
   padding-left: 34px;
   cursor: pointer;
   line-height: 28px;
 }
 
-.custom-checkbox + label:before {
+.custom-checkbox+label:before {
   content: "";
   position: absolute;
   left: 0;
@@ -597,17 +543,15 @@ form label.sub-label {
   background-color: #fff;
 }
 
-.custom-checkbox:checked + label:before {
+.custom-checkbox:checked+label:before {
   background: var(--green-light);
   border: 2px solid #fff;
 }
 
-.custom-checkbox:checked + label:after {
+.custom-checkbox:checked+label:after {
   content: "";
   border: 2px solid var(--primary);
-  background: rgba(0, 0, 0, 0)
-    url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAATCAYAAAB/TkaLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADASURBVHgBrZQBDYMwEEX/pgAJSKiESUDCHGwOioNNAg6QgAQkVMIk3O6yLtnKFejRl1wIbf5rm14KVICIGq4basLCkT541EBE9I8/4wAsuPOnT4ZPsMLCCy15wgqHW66QCEdYyQjlv4EVDs+KsIUVDj+KhFurKa0juLWA43rlmpfHO0V43SP84tMTJPNCj41jTcou/I8wFAljUB6DWRMrwgF7ieKJ1pGFy3tRdpIRBjrYi0NVoSKWW3eoRRR3MPAGpTbQQtH+cC8AAAAASUVORK5CYII=)
-    no-repeat;
+  background: rgba(0, 0, 0, 0) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAATCAYAAAB/TkaLAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADASURBVHgBrZQBDYMwEEX/pgAJSKiESUDCHGwOioNNAg6QgAQkVMIk3O6yLtnKFejRl1wIbf5rm14KVICIGq4basLCkT541EBE9I8/4wAsuPOnT4ZPsMLCCy15wgqHW66QCEdYyQjlv4EVDs+KsIUVDj+KhFurKa0juLWA43rlmpfHO0V43SP84tMTJPNCj41jTcou/I8wFAljUB6DWRMrwgF7ieKJ1pGFy3tRdpIRBjrYi0NVoSKWW3eoRRR3MPAGpTbQQtH+cC8AAAAASUVORK5CYII=) no-repeat;
   position: absolute;
   left: 0;
   top: 0;
@@ -639,6 +583,7 @@ button.submit-btn {
   .repeater .form-subsection.double-inputs div {
     flex-direction: column;
   }
+
   .repeater .form-subsection.double-inputs div .mt-2 {
     margin: 0.25rem;
     align-self: start;
