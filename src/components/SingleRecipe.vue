@@ -125,24 +125,6 @@ onMounted(() => {
   font-size: 1.125rem;
 }
 
-.sub-heading {
-  position: relative;
-  /* padding-left: 0.85rem; */
-  color: var(--primary);
-}
-
-/* .sub-heading::before {
-  content: "";
-  background: var(--green-light);
-  width: 5px;
-  height: 30px;
-  position: absolute;
-  bottom: 50%;
-  left: -0.25rem;
-  transform: translate(50%, 50%);
-  border-radius: 5px;
-} */
-
 .card {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

@@ -16,7 +16,7 @@ const toast = useToast();
 
 /* emitter and props */
 const emit = defineEmits(["recipeSubmitted"]);
-const props = defineProps(["editData", "isEditModeOn"]);
+const props = defineProps(["editData", "isEditModeOn", "currentUserEmail"]);
 
 /* local state recipe var */
 const localRecipe = ref();
@@ -190,6 +190,7 @@ const submitForm = async () => {
       chef: chef.value,
       occasion: occasion.value,
       serve: serveSize.value,
+      currentUserEmail: props.currentUserEmail
     };
   } else {
     // This is for editing
@@ -211,6 +212,7 @@ const submitForm = async () => {
       chef: chef.value,
       occasion: occasion.value,
       serve: serveSize.value,
+      //currentUserEmail: props.currentUserEmail
     };
   }
 
@@ -559,25 +561,6 @@ form label.sub-label {
   width: 22px;
 }
 
-button {
-  cursor: pointer;
-  padding: 15px 30px;
-  background-color: var(--primary);
-  color: var(--smoke-white);
-  border: 1px solid var(--light-grey);
-  width: fit-content;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: var(--green-light);
-}
-
-button.submit-btn {
-  margin-block: 1.5rem;
-}
 
 @media (max-width: 767px) {
   .repeater .form-subsection.double-inputs div {

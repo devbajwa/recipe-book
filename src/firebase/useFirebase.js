@@ -9,14 +9,20 @@ import { getFirestore } from 'firebase/firestore';
 const db = getFirestore(firebaseApp);
 
 
-// Auth
-// import { getAuth } from 'firebase/auth';
-// const auth = getAuth(firebaseApp);
+//Auth, Google
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
+const auth = getAuth();
 
 // A object with firebase services
 const firebase = {
-  db
-  // auth,
+  db,
+  auth,
+  provider,
+  signInWithPopup,
+  onAuthStateChanged,
+  signOut
 };
 
 export default function useFirebase() {
