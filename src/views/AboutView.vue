@@ -40,9 +40,7 @@
       </p>
       <p class="inverse">
         But here's the exciting part: I'm not just here for my own growth. I'm
-        on the lookout for like-minded developers who share my passion for Vue.
-      </p>
-      <p class="inverse">
+        on the lookout for like-minded developers who share my passion for Vue.<br /><br />
         If you're into collaboration, bouncing ideas around, and creating cool
         projects together, I'm extending a virtual high-five your way! 🙌
       </p>
@@ -125,10 +123,10 @@ a:hover {
 }
 
 .inverse {
-  background: var(--dark-grey);
-  color: var(--light-grey);
+  background: var(--green-lightest);
+  color: var(--dark-grey);
   clip-path: inset(0 -100vw);
-  box-shadow: 0 0 0 25px var(--dark-grey);
+  box-shadow: 0 0 0 25px var(--green-lightest);
   padding-block: 1rem;
 }
 
