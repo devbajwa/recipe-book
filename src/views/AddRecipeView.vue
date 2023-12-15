@@ -3,8 +3,13 @@ import { ref, onMounted } from "vue";
 import RecipeForm from "../components/RecipeForm.vue";
 import { recipeService } from "../service/recipeService";
 import { useRouter } from "vue-router";
-import useFirebase from '../firebase/useFirebase'
+import useFirebase from '../firebase/useFirebase';
+import { useToast } from "vue-toastification";
 
+/* Toastification messages */
+const toast = useToast();
+
+/* Router */
 const router = useRouter();
 
 const handleSubmitRecipe = async (recipeToSubmit) => {
@@ -50,11 +55,10 @@ const handleSignInGoogle = () => {
     .then((result) => {
       // The signed-in user info.
       const user = result.user;
-      console.log(user)
       currentUser.value = user.displayName;
       currentUserEmail.value = user.email;
       isSignedIn.value = true;
-      console.log(user.auth)
+      toast.success("You are logged in Successfully");
     }).catch((error) => {
       console.error(error);
     })
@@ -64,6 +68,7 @@ const handleSignInGoogle = () => {
 const handleSignOutGoogle = () => {
   firebase.signOut(firebase.auth).then(() => {
     isSignedIn.value = false;
+    toast.success("You are logged out Successfully");
   })
 }
 </script>
