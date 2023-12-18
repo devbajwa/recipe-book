@@ -60,22 +60,6 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.add-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.add-button .svg-inline--fa {
-  color: var(--dark-grey);
-  background-color: var(--smoke-white);
-  padding: 0.15rem;
-  border-radius: 50%;
-  width: 0.65rem;
-  height: 0.65rem;
-}
-
 .username {
   text-transform: capitalize;
   color: var(--primary);

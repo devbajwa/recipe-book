@@ -130,6 +130,22 @@ button.submit-btn {
   margin-block: 1.5rem;
 }
 
+/* Special Button */
+.add-button {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.add-button .svg-inline--fa {
+  color: var(--dark-grey);
+  background-color: var(--smoke-white);
+  padding: 0.15rem;
+  border-radius: 50%;
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
 /* Font Awesome */
 .svg-inline--fa {
   color: var(--primary);
@@ -157,4 +173,14 @@ button.submit-btn {
 }
 .Vue-Toastification__toast .svg-inline--fa {
   color: white;
+}
+.svg-inline--fa.fa-circle-user {
+  color: var(--primary);
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.svg-inline--fa.fa-circle-user:hover {
+  color: var(--accent);
 }
