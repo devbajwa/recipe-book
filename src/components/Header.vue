@@ -29,7 +29,7 @@ const handlePopup = () => {
   } else {
     popup.style.left = (buttonRect.left) + 'px';
   }
-  popup.style.top = buttonRect.bottom + 'px';
+  popup.style.top = (buttonRect.bottom + 10) + 'px';
   popup.style.display = (popup.style.display === 'none' || popup.style.display === '') ? 'grid' : 'none';
 }
 
@@ -135,6 +135,7 @@ document.addEventListener('click', function (event) {
 .nav .user-profile .username {
   color: #666;
   margin-block: 0rem;
+  cursor: pointer;
 }
 
 .nav .user-icon {
@@ -170,10 +171,11 @@ document.addEventListener('click', function (event) {
 .popup .nav-links {
   flex-direction: column;
   align-items: flex-start;
+  gap: 1.125rem;
+  margin-top: 0.75rem;
 }
 
 .popup .nav-links a {
-  text-decoration: underline;
   font-size: 1rem;
 }
 
