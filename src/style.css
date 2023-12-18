@@ -155,3 +155,6 @@ button.submit-btn {
 .svg-inline--fa.extreme {
   color: red;
 }
+.Vue-Toastification__toast .svg-inline--fa {
+  color: white;
+}
