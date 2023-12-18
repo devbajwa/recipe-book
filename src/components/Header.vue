@@ -134,6 +134,7 @@ document.addEventListener('click', function (event) {
 
 .nav .user-profile .username {
   color: #666;
+  margin-block: 0rem;
 }
 
 .nav .user-icon {
@@ -190,7 +191,7 @@ document.addEventListener('click', function (event) {
   }
 
   .nav .user-profile {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
   }
 }
 </style>
