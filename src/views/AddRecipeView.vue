@@ -4,10 +4,13 @@ import RecipeForm from "../components/RecipeForm.vue";
 import { recipeService } from "../service/recipeService";
 import { useRouter } from "vue-router";
 import useFirebase from '../firebase/useFirebase';
-import { useToast } from "vue-toastification";
+import { useUserStore } from "../stores/UserStore";
+import { storeToRefs } from 'pinia'
 
-/* Toastification messages */
-const toast = useToast();
+/* Store */
+const store = useUserStore()
+const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store)
+const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store
 
 /* Router */
 const router = useRouter();
@@ -24,53 +27,6 @@ const handleSubmitRecipe = async (recipeToSubmit) => {
 onMounted(async () => {
   await getCurrentUser(); // Check if the user is already logged in on the page loading
 })
-
-const getCurrentUser = () => {
-  return new Promise((resolve, reject) => {
-    const removeListener = firebase.onAuthStateChanged(
-      firebase.auth,
-      (user) => {
-        removeListener();
-        resolve(user);
-        if (user) {
-          currentUser.value = user.displayName;
-          currentUserEmail.value = user.email;
-          isSignedIn.value = true;
-        }
-      },
-      reject
-    )
-  })
-}
-
-/* Auth */
-const currentUser = ref("");
-const currentUserEmail = ref("");
-const isSignedIn = ref(false);
-const { firebase } = useFirebase();
-
-// Sing in with Google
-const handleSignInGoogle = () => {
-  firebase.signInWithPopup(firebase.auth, firebase.provider)
-    .then((result) => {
-      // The signed-in user info.
-      const user = result.user;
-      currentUser.value = user.displayName;
-      currentUserEmail.value = user.email;
-      isSignedIn.value = true;
-      toast.success("You are logged in Successfully");
-    }).catch((error) => {
-      console.error(error);
-    })
-}
-
-// Sing out from Google
-const handleSignOutGoogle = () => {
-  firebase.signOut(firebase.auth).then(() => {
-    isSignedIn.value = false;
-    toast.success("You are logged out Successfully");
-  })
-}
 </script>
 
 <template>
