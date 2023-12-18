@@ -59,11 +59,9 @@ router.beforeEach(async (to, from, next) => {
     const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store
     if (to.matched.some((record) => record.meta.requiresAuth)) {
         if (await getCurrentUser()) {
-            console.log("Current User Found")
             next();
         }
         else {
-            alert('No Access granted');
             next("/")
         }
     } else {
