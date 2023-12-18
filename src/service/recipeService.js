@@ -61,5 +61,21 @@ export const recipeService = {
     }
   },
 
+  // Get recipe(s) which the current user added
+  async getFirestoreCurrentUserRecipes(currentUserEmail) {
+    try {
+      const q = query(collection(firebase.db, "recipes"), where("currentUserEmail", "==", currentUserEmail));
+      const querySnapshot = await getDocs(q);
+      const data = [];
+      querySnapshot.forEach((doc) => {
+        data.push({ id: doc.id, ...doc.data() });
+      });
+      return data;
+    } catch (error) {
+      console.error('Error saving data:', error);
+      throw error;
+    }
+  },
+
 
 };

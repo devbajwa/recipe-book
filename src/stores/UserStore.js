@@ -19,7 +19,6 @@ export const useUserStore = defineStore('UserStore', () => {
                         currentUserEmail.value = user.email;
                         isSignedIn.value = true;
                     }
-                    console.log("Logged IN: ", user)
                 },
                 reject
             )

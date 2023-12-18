@@ -21,13 +21,13 @@ const singleRecipe = ref();
 
 onMounted(async () => {
   // Function to fetch data from Firestore
-  const querySnapshot = await getDocs(collection(firebase.db, "recipes"));
+  /*const querySnapshot = await getDocs(collection(firebase.db, "recipes"));
   const data = [];
   querySnapshot.forEach((doc) => {
     data.push({ id: doc.id, ...doc.data() });
     //console.log(doc.id, doc.data())
   });
-  recipes.value = data;
+  recipes.value = data;*/
 
   // Function to get single data from Firestore
   const q = doc(firebase.db, "recipes", "Qp8GRcd7STicfgs5cTLg");
@@ -50,7 +50,9 @@ onMounted(async () => {
   // firestore as service
 
   // fetch all recipes
-  const fbData = await recipeService.getFirestoreRecipes();
+  const fbData = await recipeService.getFirestoreCurrentUserRecipes('asd@asd');
+  console.log(fbData)
+  recipes.value = fbData;
   // add a recipe
   //   await recipeService.addFirestoreRecipe({
   //         name: "Nihari",
@@ -75,18 +77,18 @@ onBeforeMount(async () => {
   </div>
   <div v-else>Fetching...</div>
   <ul>
-    <li v-for="recipe in recipes">
+    <li v-for="recipe in recipes" :key="recipe.id">
       <h3>Recipe for</h3>
       {{ recipe.name }}
       <h3>Ingredients</h3>
       <ol>
-        <li v-for="ingredient in recipe.ingredients">
+        <li v-for="ingredient in recipe.ingredients" :key="ingredient.name">
           {{ ingredient.name }} = {{ ingredient.qty }}
         </li>
       </ol>
       <h3>Methods</h3>
       <ol>
-        <li v-for="step in recipe.steps">
+        <li v-for="step in recipe.steps" :key="step.step">
           {{ step.step }}
         </li>
       </ol>

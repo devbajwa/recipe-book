@@ -39,7 +39,6 @@ document.addEventListener('click', function (event) {
   const userIcon = document.querySelector('.user-icon');
   // Check if the click is outside the popup and the button
   if (!popup.contains(event.target) && event.target !== userIcon) {
-    console.log(event.target)
     popup.style.display = 'none';
   }
 });
@@ -70,7 +69,7 @@ document.addEventListener('click', function (event) {
         <div class="popup" id="popup">
           <h4>Dashboard</h4>
           <div class="nav-links">
-            <a href="#" @click="router.push('/')">My Recipes</a>
+            <a href="#" @click="router.push('/my-recipes')">My Recipes</a>
             <a href="#" @click="handleSignOutGoogle">Log out</a>
           </div>
         </div>

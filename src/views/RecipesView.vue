@@ -45,6 +45,7 @@ const recipes = ref();
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 /* Media query for smaller screens */
 @media screen and (max-width: 580px) {
   .card-container {

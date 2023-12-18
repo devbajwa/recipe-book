@@ -70,6 +70,14 @@ section.subhero {
   margin-bottom: 1rem;
 }
 
+section.subhero h4 {
+  color: #666;
+  text-transform: uppercase;
+  margin-top: -0.25rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1ch;
+}
+
 .intro {
   padding: 1rem 1.75rem;
   background: var(--light-grey);
