@@ -38,8 +38,10 @@ document.addEventListener('click', function (event) {
   const popup = document.getElementById('popup');
   const userIcon = document.querySelector('.user-icon');
   // Check if the click is outside the popup and the button
-  if (!popup.contains(event.target) && event.target !== userIcon) {
-    popup.style.display = 'none';
+  if (popup) {
+    if (!popup.contains(event.target) && event.target !== userIcon) {
+      popup.style.display = 'none';
+    }
   }
 });
 </script>
