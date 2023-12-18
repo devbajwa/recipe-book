@@ -23,7 +23,7 @@ const recipes = ref();
   <HeroSection />
   <section class="container">
     <div v-if="recipes" class="card-container">
-      <RecipeCard :recipe="recipe" v-for="recipe in recipes" />
+      <RecipeCard :recipe="recipe" v-for="recipe in recipes" :key="recipe.id" />
     </div>
     <div v-else>
       <Loader :text="'Fetching recipes...'" />
