@@ -11,17 +11,18 @@ import RecipeCard from "../components/RecipeCard.vue";
 import Loader from "../components/Loader.vue";
 import { recipeService } from "../service/recipeService";
 import { useUserStore } from "../stores/UserStore";
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from "pinia";
 
 /* Store */
-const store = useUserStore()
-const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store)
-const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store
+const store = useUserStore();
+const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store);
+const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
 
 onMounted(async () => {
     await getCurrentUser(); // Check if the user is already logged in on the page loading
     // Fetch all the recipes from firestore via service api
-    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
+    const fetchedRecipesFromAPI =
+        await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
     recipes.value = fetchedRecipesFromAPI;
 });
 
