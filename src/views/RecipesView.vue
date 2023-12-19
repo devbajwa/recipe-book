@@ -5,7 +5,7 @@
         Then pass the recipes in a for loop as a prop to Recipe Card component which render the recipe key details.
 -->
 <script setup>
-import { ref, onBeforeMount } from "vue";
+import { ref, onBeforeMount, computed } from "vue";
 import HeroSection from "../components/HeroSection.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import Loader from "../components/Loader.vue";
@@ -18,12 +18,21 @@ onBeforeMount(async () => {
 });
 
 const recipes = ref();
+const search = ref("");
+
+const filteredRecipes = computed(() => {
+  const query = search.value.toLowerCase()
+  return recipes.value.filter(recipe => recipe.name.toLowerCase().includes(query))
+})
+
+
 </script>
 <template>
   <HeroSection />
   <section class="container">
+    <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
     <div v-if="recipes" class="card-container">
-      <RecipeCard :recipe="recipe" v-for="recipe in recipes" :key="recipe.id" />
+      <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" />
     </div>
     <div v-else>
       <Loader :text="'Fetching recipes...'" />
