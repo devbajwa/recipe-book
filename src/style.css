@@ -42,6 +42,10 @@ body {
   min-height: 100dvh;
 }
 
+a {
+  text-underline-offset: 25%;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -55,6 +59,9 @@ body {
 
 .row-flex a {
   color: var(--smoke-white);
+}
+.row-flex a:hover {
+  color: var(--accent);
 }
 
 section h1,
@@ -172,6 +179,21 @@ button.submit-btn {
   height: 0.65rem;
 }
 
+/* Form */
+.render-form {
+  display: grid;
+  grid-template-columns: 275px auto;
+}
+.profile h2 {
+  font-size: 1rem;
+}
+
+.profile .username {
+  text-transform: capitalize;
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+
 /* Font Awesome */
 .svg-inline--fa {
   color: var(--primary);
@@ -209,4 +231,17 @@ button.submit-btn {
 
 .svg-inline--fa.fa-circle-user:hover {
   color: var(--accent);
+}
+
+/* MEDIA QUERY */
+@media (max-width: 921px) {
+  .render-form {
+    display: block;
+  }
+  .d-none-mobile {
+    display: none;
+  }
+  form {
+    margin: auto;
+  }
 }

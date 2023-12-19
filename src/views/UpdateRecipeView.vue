@@ -51,24 +51,11 @@ onMounted(async () => {
     <section class="subhero">
         <h1 class="title">Update Recipe</h1>
     </section>
-    <!-- If the user is NOT Logged In -->
-    <section v-if="!isSignedIn" class="container login-user">
-        <h2 class="sub-heading">Welcome to ReciPen</h2>
-        <p>
-            For recipe sharing and additional features, simply log in with Google.
-            Explore the full potential of our platform and enhance your culinary
-            experience.
-        </p>
-        <p>Log in and let the cooking journey commence!</p>
-        <button @click="handleSignInGoogle">
-            <span class="add-button"><font-awesome-icon icon="fa-brands fa-google" /><span>Sign in with Google</span></span>
-        </button>
-    </section>
     <!-- If the user IS Logged In -->
-    <section v-if="isSignedIn" class="render-form">
-        <div class="profile container">
+    <section v-if="isSignedIn" class="render-form container">
+        <div class="profile">
             <h2>
-                Welcome <span class="username">{{ currentUser }}</span>
+                Welcome<br /><span class="username">{{ currentUser }}</span>
             </h2>
             <button @click="handleSignOutGoogle">
                 <span class="add-button"><font-awesome-icon icon="fa-brands fa-google" /><span>Sign out</span></span>
@@ -80,9 +67,4 @@ onMounted(async () => {
     </section>
 </template>
 
-<style scoped>
-.username {
-    text-transform: capitalize;
-    color: var(--primary);
-}
-</style>
+<style scoped></style>

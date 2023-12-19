@@ -47,9 +47,9 @@ onMounted(async () => {
     </button>
   </section>
   <!-- If the user IS Logged In -->
-  <section v-if="isSignedIn" class="render-form">
-    <div class="profile container">
-      <h2>Welcome <span class="username">{{ currentUser }}</span></h2>
+  <section v-if="isSignedIn" class="render-form container">
+    <div class="profile d-none-mobile">
+      <h2>Welcome<br /><span class="username">{{ currentUser }}</span></h2>
       <button @click="handleSignOutGoogle">
         <span class="add-button"><font-awesome-icon icon="fa-brands fa-google" /><span>Sign out</span></span>
       </button>
@@ -59,9 +59,4 @@ onMounted(async () => {
   </section>
 </template>
 
-<style scoped>
-.username {
-  text-transform: capitalize;
-  color: var(--primary);
-}
-</style>
+<style scoped></style>

@@ -234,11 +234,6 @@ const handleDelete = async () => {
   margin-block: 2rem;
 }
 
-.crud-operations a {
-  text-decoration: none;
-  color: var(--primary);
-}
-
 .crud-operations a:hover {
   color: var(--accent);
 }

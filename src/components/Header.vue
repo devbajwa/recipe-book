@@ -95,6 +95,7 @@ document.addEventListener('click', function (event) {
 .nav .nav-logo h1 {
   font-family: var(--signature-font);
   cursor: pointer;
+  text-shadow: 0 0px 30px #42b883;
 }
 
 .nav .nav-logo h1:hover {

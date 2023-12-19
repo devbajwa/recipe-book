@@ -238,7 +238,7 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <section class="container">
+  <section class="container m-0">
     <form @submit.prevent="submitForm">
       <div class="form-subsection">
         <label>Recipe name:</label>
@@ -395,7 +395,7 @@ form {
   flex-direction: column;
   max-width: 500px;
   gap: 1.5rem;
-  margin: auto;
+  /* margin: auto; */
 }
 
 input[type="text"],
@@ -443,7 +443,11 @@ form label.sub-label {
 }
 
 .mt-2 {
-  margin-top: 2rem;
+  margin-top: 2.5rem;
+}
+
+.m-0 {
+  margin: 0;
 }
 
 .mini-input {

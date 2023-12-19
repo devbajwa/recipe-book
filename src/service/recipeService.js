@@ -65,7 +65,7 @@ export const recipeService = {
   // Get recipe(s) which the current user added
   async getFirestoreCurrentUserRecipes(currentUserEmail) {
     try {
-      const q = query(collection(firebase.db, "recipes"), where("currentUserEmail", "==", currentUserEmail));
+      const q = query(collection(firebase.db, "recipes"), where("currentUserEmail", "==", currentUserEmail), orderBy("date", "desc"));
       const querySnapshot = await getDocs(q);
       const data = [];
       querySnapshot.forEach((doc) => {
