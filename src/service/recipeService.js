@@ -51,9 +51,9 @@ export const recipeService = {
   },
 
   // Get single recipe with id
-  async getFirestoreRecipe(id) {
+  async getFirestoreRecipe(recipeID) {
     try {
-      const q = doc(firebase.db, "recipes", id);
+      const q = doc(firebase.db, "recipes", recipeID);
       const querySnapshot = await getDoc(q);
       return querySnapshot;
     } catch (error) {
@@ -84,6 +84,16 @@ export const recipeService = {
       const recipeRef = doc(firebase.db, "recipes", recipeID);
       // Set the recipeData to matching id in firestore
       await updateDoc(recipeRef, recipeData);
+    } catch (error) {
+      console.error('Error saving data:', error);
+      throw error;
+    }
+  },
+
+  // Delete recipe with recipe ID
+  async deleteFirestoreRecipe(recipeID) {
+    try {
+      await deleteDoc(doc(firebase.db, "recipes", recipeID));
     } catch (error) {
       console.error('Error saving data:', error);
       throw error;
