@@ -18,7 +18,6 @@ const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store);
 const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
 
 onMounted(async () => {
-    await getCurrentUser(); // Check if the user is already logged in on the page loading
     // Fetch all the recipes from firestore via service api
     const fetchedRecipesFromAPI =
         await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);

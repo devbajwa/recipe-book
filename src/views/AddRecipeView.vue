@@ -23,10 +23,6 @@ const handleSubmitRecipe = async (recipeToSubmit) => {
     console.error("Error saving data:", error);
   }
 };
-
-onMounted(async () => {
-  await getCurrentUser(); // Check if the user is already logged in on the page loading
-})
 </script>
 
 <template>
