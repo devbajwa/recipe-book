@@ -12,10 +12,15 @@ import {
   watch,
   defineProps,
   computed,
-} from "vue";
-import { useRouter } from "vue-router";
-import { useUserStore } from "../stores/UserStore";
+} from "vue"
+import { useRouter } from "vue-router"
+import { recipeService } from "../service/recipeService"
+import { useUserStore } from "../stores/UserStore"
 import { storeToRefs } from 'pinia'
+import { useToast } from "vue-toastification"
+
+/* toastification messages */
+const toast = useToast();
 
 /* Props */
 const props = defineProps(["recipe"]);
@@ -53,6 +58,19 @@ onMounted(async () => {
 
 const handleEdit = () => {
   router.push(`/update-recipe/${props.recipe.id}`)
+}
+const handleDelete = async () => {
+  const ans = confirm("Are you suer you want to delete this recipe? Recipe will be deleted permanently")
+  if (ans) {
+    try {
+      await recipeService.deleteFirestoreRecipe(props.recipe.id)
+      toast.success("Recipe deleted successfully")
+      router.push('/my-recipes')
+    } catch (error) {
+      console.error("Error deleting data:", error)
+      toast.error("Some error occured");
+    }
+  }
 
 }
 </script>
@@ -219,7 +237,6 @@ const handleEdit = () => {
 .crud-operations a {
   text-decoration: none;
   color: var(--primary);
-  font-weight: 600;
 }
 
 .crud-operations a:hover {

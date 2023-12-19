@@ -38,7 +38,7 @@ const handleSubmitRecipe = async (recipeToSubmit) => {
         await recipeService.updateFirestoreRecipe(recipeId, recipeToSubmit);
         router.push(`/`); // Back to recipes
     } catch (error) {
-        console.error("Error saving data:", error);
+        console.error("Error updating data:", error);
     }
 };
 
