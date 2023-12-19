@@ -7,6 +7,8 @@ import {
   computed,
   nextTick,
   onMounted,
+  isProxy,
+  toRaw
 } from "vue";
 
 import { useToast } from "vue-toastification";
@@ -147,12 +149,25 @@ const handleAfterSubmitChecks = () => {
 // Function to handle edit form coming from the RecipeDetail component
 watchEffect(() => {
   if (props.isEditModeOn === true) {
-    name.value = props.editData.name;
-    desc.value = props.editData.desc;
-    isFav.value = props.editData.isFav;
-    editedIngredients.value = JSON.parse(
-      JSON.stringify(props.editData.ingredients)
-    ); // this is required for arrays if data is array as prop then must do this
+    let recipeToEdit;
+    if (isProxy(props.editData)) {
+      recipeToEdit = toRaw(props.editData)
+    }
+    if (recipeToEdit) {
+      name.value = recipeToEdit.data.name
+      desc.value = recipeToEdit.data.desc
+      isFav.value = recipeToEdit.data.isFav
+      editedIngredients.value = recipeToEdit.data.ingredients
+      editedSteps.value = recipeToEdit.data.steps
+      selectedCategory.value = recipeToEdit.data.category
+      prepTime.value = recipeToEdit.data.prepTime
+      cookTime.value = recipeToEdit.data.cookTime
+      selectedSpiceLevel.value = recipeToEdit.data.spiceLevel
+      selectedSugarLevel.value = recipeToEdit.data.sugarLevel
+      chef.value = recipeToEdit.data.chef
+      occasion.value = recipeToEdit.data.occasion
+      serveSize.value = recipeToEdit.data.serve
+    }
   }
 });
 
@@ -196,8 +211,6 @@ const submitForm = async () => {
     // This is for editing
     handlePreSubmitChecks();
     recipeToSubmit = {
-      id: props.editData.id,
-      //id: uuidv4(),
       //date: getCustomFullDate(), //not required in edit mode
       name: name.value,
       desc: desc.value,
@@ -218,7 +231,7 @@ const submitForm = async () => {
 
   localRecipe.value = recipeToSubmit; // Local state has submitted data for testing only
   emit("recipeSubmitted", recipeToSubmit); // Emitting the event with recipe to submit via api, see the AddRecipeView.vue
-  toast.success("Recipe submitted successfully!");
+  toast.success("Recipe updated successfully!");
   // Clear values to default after form submits
   handleAfterSubmitChecks();
 };

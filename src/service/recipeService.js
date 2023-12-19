@@ -14,6 +14,7 @@ import {
   addDoc,
   setDoc,
   deleteDoc,
+  updateDoc,
   orderBy
 } from "firebase/firestore";
 const { firebase } = useFirebase();
@@ -71,6 +72,18 @@ export const recipeService = {
         data.push({ id: doc.id, ...doc.data() });
       });
       return data;
+    } catch (error) {
+      console.error('Error saving data:', error);
+      throw error;
+    }
+  },
+
+  // Update recipe which the updated data for recipe
+  async updateFirestoreRecipe(recipeID, recipeData) {
+    try {
+      const recipeRef = doc(firebase.db, "recipes", recipeID);
+      // Set the recipeData to matching id in firestore
+      await updateDoc(recipeRef, recipeData);
     } catch (error) {
       console.error('Error saving data:', error);
       throw error;

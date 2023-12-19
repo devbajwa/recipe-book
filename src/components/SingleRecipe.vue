@@ -13,12 +13,27 @@ import {
   defineProps,
   computed,
 } from "vue";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../stores/UserStore";
+import { storeToRefs } from 'pinia'
 
+/* Props */
 const props = defineProps(["recipe"]);
+
+/* Router */
+const router = useRouter();
+
+/* Store */
+const store = useUserStore()
+const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store)
+const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store
 
 const spiceLevelClass = ref();
 
-onMounted(() => {
+onMounted(async () => {
+  // Check if the user is already logged in on the page loading
+  await getCurrentUser();
+  // Classes and styles for spice level
   const checkSpiceLevel = () => {
     if (props.recipe.data.spiceLevel === "Low") {
       spiceLevelClass.value = "low";
@@ -32,10 +47,14 @@ onMounted(() => {
     if (props.recipe.data.spiceLevel === "Extreme") {
       spiceLevelClass.value = "extreme";
     }
-    console.log(spiceLevelClass.value);
   };
   checkSpiceLevel();
 });
+
+const handleEdit = () => {
+  router.push(`/update-recipe/${props.recipe.id}`)
+
+}
 </script>
 
 <template>
@@ -109,6 +128,15 @@ onMounted(() => {
         </ul>
       </div>
     </section>
+    <div v-if="isSignedIn" class="crud-operations">
+      <div class="edit" @click="handleEdit">
+        <a href="#"><font-awesome-icon icon="fa-regular fa-edit" /> Edit this recipe</a>
+      </div>
+      <div class="delete" @click="handleDelete">
+        <a href="#"><font-awesome-icon icon="fa-regular fa-trash-can" /> Delete this recipe</a>
+      </div>
+    </div>
+
   </section>
 </template>
 
@@ -181,6 +209,26 @@ onMounted(() => {
 .card .card__header div span {
   flex: 1;
 } */
+
+.crud-operations {
+  display: flex;
+  gap: 2rem;
+  margin-block: 2rem;
+}
+
+.crud-operations a {
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.crud-operations a:hover {
+  color: var(--accent);
+}
+
+.crud-operations .svg-inline--fa.fa-trash-can {
+  color: var(--bright-red);
+}
 
 /* Fontawesome */
 .svg-inline--fa.low {

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import RecipesView from '../views/RecipesView.vue'
 import AddRecipeView from '../views/AddRecipeView.vue'
+import UpdateRecipeView from '../views/UpdateRecipeView.vue'
 import AboutView from '../views/AboutView.vue'
 import RecipeDetailView from '../views/RecipeDetailView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
@@ -21,6 +22,14 @@ const router = createRouter({
             path: '/add-recipe',
             name: 'addRecipe',
             component: AddRecipeView
+        },
+        {
+            path: '/update-recipe/:id',
+            name: 'updateRecipe',
+            component: UpdateRecipeView,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/recipe/:id',

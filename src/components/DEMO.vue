@@ -11,6 +11,7 @@ import {
   addDoc,
   setDoc,
   deleteDoc,
+  updateDoc
 } from "firebase/firestore";
 
 import { recipeService } from "../service/recipeService";
@@ -58,6 +59,15 @@ onMounted(async () => {
   //         name: "Nihari",
   //         desc: "Behtreen cheez"
   //     });
+
+  const recipeRef = doc(firebase.db, "recipes", "4k6qCisxymPWVsIvlG65");
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(recipeRef, {
+    category: "Snack",
+    chef: "Waqas",
+    currentUserEmail: "wbajwa313@gmail.com"
+  });
 });
 
 onBeforeMount(async () => {
