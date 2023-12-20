@@ -245,3 +245,12 @@ button.submit-btn {
     margin: auto;
   }
 }
+
+@media (max-width: 750px) {
+  .row-flex {
+    flex-direction: column;
+  }
+  .row-flex p {
+    margin-block: 0.5rem;
+  }
+}
