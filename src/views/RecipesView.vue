@@ -5,16 +5,20 @@
         Then pass the recipes in a for loop as a prop to Recipe Card component which render the recipe key details.
 -->
 <script setup>
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, onMounted } from "vue";
 import HeroSection from "../components/HeroSection.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import Loader from "../components/Loader.vue";
 import { recipeService } from "../service/recipeService"
 import { userInteractionService } from "../service/userInteractionService";
 import { useUserStore } from "../stores/UserStore";
+import { storeToRefs } from "pinia";
 
+/* Store */
 const store = useUserStore();
-const { currentUserEmail } = store;
+const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store);
+const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
+
 
 onBeforeMount(async () => {
   // Fetch all the recipes from firestore via service api
@@ -30,40 +34,40 @@ const filteredRecipes = computed(() => {
   return recipes.value.filter(recipe => recipe.name.toLowerCase().includes(query))
 })
 
+const fetchAllRecipes = async () => {
+  // Fetch again the recipes as they are updated - this will trigger filteredRecipe computed as well hence re render the component
+  const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
+  recipes.value = fetchedRecipesFromAPI;
+}
+
 
 /* Update the recipe likes based on id */
 const updateRecipeLikes = async (recipeID) => {
   try {
     await recipeService.updateFirestoreRecipeLikes(recipeID);
-    await userInteractionService.updateUserInteractionLikes(currentUserEmail, recipeID);
+    await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
   } catch (error) {
     console.error('Error saving likes data', error)
   }
-
-  // Fetch again the recipes as they are updated - this will trigger filteredRecipe computed as well hence re render the component
-  const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
-  recipes.value = fetchedRecipesFromAPI;
+  fetchAllRecipes()
 }
 
 /* Update the recipe collection based on id */
 const updateRecipeCollection = async (recipeID, action) => {
   if (action === "ADD") {
     try {
-      await userInteractionService.addUserInteractionCollection(currentUserEmail, recipeID);
+      await userInteractionService.addUserInteractionCollection(currentUserEmail.value, recipeID);
     } catch (error) {
       console.error('Error saving likes data', error)
     }
   } else {
     try {
-      await userInteractionService.removeUserInteractionCollection(currentUserEmail, recipeID);
+      await userInteractionService.removeUserInteractionCollection(currentUserEmail.value, recipeID);
     } catch (error) {
       console.error('Error saving likes data', error)
     }
   }
-
-  // Fetch again the recipes as they are updated - this will trigger filteredRecipe computed as well hence re render the component
-  const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
-  recipes.value = fetchedRecipesFromAPI;
+  fetchAllRecipes()
 }
 </script>
 <template>

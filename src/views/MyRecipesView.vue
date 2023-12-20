@@ -32,6 +32,12 @@ const filteredRecipes = computed(() => {
     return recipes.value.filter(recipe => recipe.name.toLowerCase().includes(query))
 })
 
+const fetchCurrentUserRecipes = async () => {
+    // Fetch all the recipes from firestore via service api for the current user
+    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
+    recipes.value = fetchedRecipesFromAPI;
+}
+
 /* Update the recipe likes based on id */
 const updateRecipeLikes = async (recipeID) => {
     try {
@@ -40,10 +46,7 @@ const updateRecipeLikes = async (recipeID) => {
     } catch (error) {
         console.error('Error saving likes data', error)
     }
-
-    // Fetch all the recipes from firestore via service api
-    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
-    recipes.value = fetchedRecipesFromAPI;
+    fetchCurrentUserRecipes()
 }
 
 /* Update the recipe collection based on id */
@@ -61,10 +64,7 @@ const updateRecipeCollection = async (recipeID, action) => {
             console.error('Error saving likes data', error)
         }
     }
-
-    // Fetch all the recipes from firestore via service api
-    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
-    recipes.value = fetchedRecipesFromAPI;
+    fetchCurrentUserRecipes()
 }
 </script>
 <template>
