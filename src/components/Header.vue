@@ -135,9 +135,13 @@ document.addEventListener('click', function (event) {
 }
 
 .nav .user-profile .username {
-  color: #666;
+  color: var(--primary);
   margin-block: 0rem;
   cursor: pointer;
+}
+
+.nav .user-profile .username:hover {
+  color: var(--accent);
 }
 
 .nav .user-icon {
