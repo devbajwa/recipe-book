@@ -60,14 +60,14 @@ onMounted(async () => {
   //         desc: "Behtreen cheez"
   //     });
 
-  const recipeRef = doc(firebase.db, "recipes", "4k6qCisxymPWVsIvlG65");
-
+  //const recipeRef = doc(firebase.db, "recipes", "4k6qCisxymPWVsIvlG65");
+  await recipeService.updateFirestoreRecipeLikes("XDA5FnromKFX4a3pa7iM")
   // Set the "capital" field of the city 'DC'
-  await updateDoc(recipeRef, {
-    category: "Snack",
-    chef: "Waqas",
-    currentUserEmail: "wbajwa313@gmail.com"
-  });
+  // await updateDoc(recipeRef, {
+  //   category: "Snack",
+  //   chef: "Waqas",
+  //   currentUserEmail: "wbajwa313@gmail.com"
+  // });
 });
 
 onBeforeMount(async () => {

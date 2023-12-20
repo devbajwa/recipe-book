@@ -15,7 +15,9 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
-  orderBy
+  orderBy,
+  FieldValue,
+  increment
 } from "firebase/firestore";
 const { firebase } = useFirebase();
 
@@ -94,6 +96,18 @@ export const recipeService = {
   async deleteFirestoreRecipe(recipeID) {
     try {
       await deleteDoc(doc(firebase.db, "recipes", recipeID));
+    } catch (error) {
+      console.error('Error saving data:', error);
+      throw error;
+    }
+  },
+
+  // Increment likes by 1
+  async updateFirestoreRecipeLikes(recipeID) {
+    try {
+      await updateDoc(doc(firebase.db, "recipes", recipeID), {
+        likes: increment(1)
+      });
     } catch (error) {
       console.error('Error saving data:', error);
       throw error;

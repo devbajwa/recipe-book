@@ -9,7 +9,12 @@ import { ref, onBeforeMount, computed } from "vue";
 import HeroSection from "../components/HeroSection.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import Loader from "../components/Loader.vue";
-import { recipeService } from "../service/recipeService";
+import { recipeService } from "../service/recipeService"
+import { userInteractionService } from "../service/userInteractionService";
+import { useUserStore } from "../stores/UserStore";
+
+const store = useUserStore();
+const { currentUserEmail } = store;
 
 onBeforeMount(async () => {
   // Fetch all the recipes from firestore via service api
@@ -26,13 +31,48 @@ const filteredRecipes = computed(() => {
 })
 
 
+/* Update the recipe likes based on id */
+const updateRecipeLikes = async (recipeID) => {
+  try {
+    await recipeService.updateFirestoreRecipeLikes(recipeID);
+    await userInteractionService.updateUserInteractionLikes(currentUserEmail, recipeID);
+  } catch (error) {
+    console.error('Error saving likes data', error)
+  }
+
+  // Fetch again the recipes as they are updated - this will trigger filteredRecipe computed as well hence re render the component
+  const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
+  recipes.value = fetchedRecipesFromAPI;
+}
+
+/* Update the recipe collection based on id */
+const updateRecipeCollection = async (recipeID, action) => {
+  if (action === "ADD") {
+    try {
+      await userInteractionService.addUserInteractionCollection(currentUserEmail, recipeID);
+    } catch (error) {
+      console.error('Error saving likes data', error)
+    }
+  } else {
+    try {
+      await userInteractionService.removeUserInteractionCollection(currentUserEmail, recipeID);
+    } catch (error) {
+      console.error('Error saving likes data', error)
+    }
+  }
+
+  // Fetch again the recipes as they are updated - this will trigger filteredRecipe computed as well hence re render the component
+  const fetchedRecipesFromAPI = await recipeService.getFirestoreRecipes();
+  recipes.value = fetchedRecipesFromAPI;
+}
 </script>
 <template>
   <HeroSection />
   <section class="container">
     <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
     <div v-if="recipes" class="card-container">
-      <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" />
+      <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" @likeRecipe="updateRecipeLikes"
+        @collectRecipe="updateRecipeCollection" />
     </div>
     <div v-else>
       <Loader :text="'Fetching recipes...'" />

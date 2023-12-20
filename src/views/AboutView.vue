@@ -110,8 +110,7 @@
 }
 
 .border-block {
-  border-top: 1px solid #e2e2e3;
-  border-bottom: 1px solid #e2e2e3;
+  border-block: 1px solid var(--border-color);
   padding-block: 24px;
 }
 

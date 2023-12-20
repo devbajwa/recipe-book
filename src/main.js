@@ -10,16 +10,16 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons Solid */
-import { faUtensils, faBowlFood, faHeart as faHeartSolid, faMortarPestle, faFireFlameCurved, faPepperHot, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faBowlRice, faUser, faCaretRight } from '@fortawesome/free-solid-svg-icons'
+import { faUtensils, faBowlFood, faHeart as faHeartSolid, faMortarPestle, faFireFlameCurved, faPepperHot, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faBowlRice, faUser, faCaretRight, faBookmark as faBookMarkSolid } from '@fortawesome/free-solid-svg-icons'
 
 /* import specific icons Regular */
-import { faClock, faCalendar, faHeart as faHeartRegular, faEdit, faFaceSmile, faCircleUser, faTrashCan } from '@fortawesome/free-regular-svg-icons'
+import { faClock, faCalendar, faHeart as faHeartRegular, faEdit, faFaceSmile, faCircleUser, faTrashCan, faBookmark as faBookMarkRegular } from '@fortawesome/free-regular-svg-icons'
 
 /* import brand icons regular */
 import { faGithub, faLinkedin, faHashnode, faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
-library.add(faClock, faCalendar, faUtensils, faBowlFood, faHeartSolid, faHeartRegular, faMortarPestle, faFireFlameCurved, faPepperHot, faEdit, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faFaceSmile, faBowlRice, faUser, faCaretRight, faLinkedin, faGithub, faHashnode, faGoogle, faCircleUser, faTrashCan)
+library.add(faClock, faCalendar, faUtensils, faBowlFood, faHeartSolid, faHeartRegular, faMortarPestle, faFireFlameCurved, faPepperHot, faEdit, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faFaceSmile, faBowlRice, faUser, faCaretRight, faLinkedin, faGithub, faHashnode, faGoogle, faCircleUser, faTrashCan, faBookMarkRegular, faBookMarkSolid)
 
 /* import vue-toastificaiton */
 import Toast from "vue-toastification"

@@ -11,6 +11,7 @@ import Loader from "../components/Loader.vue";
 import { recipeService } from "../service/recipeService";
 import { useUserStore } from "../stores/UserStore";
 import { storeToRefs } from "pinia";
+import { userInteractionService } from "../service/userInteractionService";
 
 /* Store */
 const store = useUserStore();
@@ -19,8 +20,7 @@ const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
 
 onMounted(async () => {
     // Fetch all the recipes from firestore via service api
-    const fetchedRecipesFromAPI =
-        await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
+    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
     recipes.value = fetchedRecipesFromAPI;
 });
 
@@ -31,6 +31,41 @@ const filteredRecipes = computed(() => {
     const query = search.value.toLowerCase()
     return recipes.value.filter(recipe => recipe.name.toLowerCase().includes(query))
 })
+
+/* Update the recipe likes based on id */
+const updateRecipeLikes = async (recipeID) => {
+    try {
+        await recipeService.updateFirestoreRecipeLikes(recipeID);
+        await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
+    } catch (error) {
+        console.error('Error saving likes data', error)
+    }
+
+    // Fetch all the recipes from firestore via service api
+    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
+    recipes.value = fetchedRecipesFromAPI;
+}
+
+/* Update the recipe collection based on id */
+const updateRecipeCollection = async (recipeID, action) => {
+    if (action === "ADD") {
+        try {
+            await userInteractionService.addUserInteractionCollection(currentUserEmail.value, recipeID);
+        } catch (error) {
+            console.error('Error saving likes data', error)
+        }
+    } else {
+        try {
+            await userInteractionService.removeUserInteractionCollection(currentUserEmail.value, recipeID);
+        } catch (error) {
+            console.error('Error saving likes data', error)
+        }
+    }
+
+    // Fetch all the recipes from firestore via service api
+    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
+    recipes.value = fetchedRecipesFromAPI;
+}
 </script>
 <template>
     <section class="subhero">
@@ -40,7 +75,8 @@ const filteredRecipes = computed(() => {
     <section class="container">
         <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
         <div v-if="recipes" class="card-container">
-            <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" />
+            <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" @likeRecipe="updateRecipeLikes"
+                @collectRecipe="updateRecipeCollection" />
         </div>
         <div v-else>
             <Loader :text="'Fetching recipes...'" />

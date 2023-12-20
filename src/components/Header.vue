@@ -157,8 +157,7 @@ document.addEventListener('click', function (event) {
   grid-template-columns: 1fr;
   flex-direction: column;
   padding: 1.25rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px dashed var(--light-grey);
+  box-shadow: inset 0 0 0 2px var(--border-color);
   border-radius: 5px;
   background-color: white;
   position: absolute;
