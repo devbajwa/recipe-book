@@ -87,6 +87,9 @@ const updateRecipeCollection = async (recipeID, action) => {
 <template>
   <HeroSection />
   <section class="container">
+    <h1 class="text-center">Explore Recipes</h1>
+  </section>
+  <section class="container">
     <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
     <div v-if="recipes" class="card-container">
       <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" :currentUserEmail="currentUserEmail"

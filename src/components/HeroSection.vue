@@ -1,9 +1,7 @@
-<template>
-    <section class="container hero">
-        <h1>ReciPen</h1>
-    </section>
-    <div class="container intro">
-        <p>
+<script setup>
+import { ref, computed } from 'vue'
+const showLongIntro = ref(false)
+const longIntro = ` <p>
             Welcome to <span class="brand">ReciPen</span>, your go-to recipe companion for effortless
             record-keeping. Designed with busy wives and mothers in mind, our app
             simplifies the art of organizing and recalling your favorite recipes.</p>
@@ -15,7 +13,40 @@
             journey and savor the convenience of having your go-to recipes at your
             fingertips.</p>
         <p>Welcome to stress-free and organized meal planning with <span class="brand">ReciPen</span>.
-        </p>
+        </p>`
+const maxLength = ref(270);
+
+const shortInro = computed(() => {
+    return longIntro.slice(0, maxLength.value) + `...`;
+})
+
+const toggleIntro = () => {
+    showLongIntro.value = !showLongIntro.value
+}
+</script>
+
+<template>
+    <section class="container hero">
+        <h1>ReciPen</h1>
+        <span class="tagline">My Recipe Book</span>
+    </section>
+    <div class="container intro">
+        <!-- <p>
+            Welcome to <span class="brand">ReciPen</span>, your go-to recipe companion for effortless
+            record-keeping. Designed with busy wives and mothers in mind, our app
+            simplifies the art of organizing and recalling your favorite recipes.</p>
+        <p>Easily document the dishes you prepare for special occasions, creating a
+            personalized culinary archive. With a straightforward interface, <span class="brand">ReciPen</span> makes it a
+            breeze to revisit and recreate those cherished recipes,
+            transforming every meal into a delightful memory.</p>
+        <p>Streamline your cooking
+            journey and savor the convenience of having your go-to recipes at your
+            fingertips.</p>
+        <p>Welcome to stress-free and organized meal planning with <span class="brand">ReciPen</span>.
+        </p> -->
+        <div v-if="showLongIntro" v-html="longIntro"></div>
+        <div v-else v-html="shortInro"></div>
+        <button @click="toggleIntro">{{ showLongIntro ? 'Read Less' : 'Read More' }}</button>
     </div>
 </template>
 <style scoped>
@@ -31,7 +62,8 @@ section {
     background-repeat: no-repeat;
     height: 325px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    /* align-items: center; */
     /* justify-content: center; */
     color: #ffffff;
     /* Set text color to white or a contrasting color */
@@ -47,6 +79,17 @@ section img {
     color: var(--smoke-white);
     color: var(--primary);
     font-family: var(--heading-font);
+    margin-bottom: 0;
+}
+
+.hero .tagline {
+    color: var(--dark-grey);
+    font-size: 0.80rem;
+    font-weight: 700;
+    letter-spacing: 0.25vh;
+    text-transform: uppercase;
+    margin-top: 5px;
+    padding-left: 0.4rem;
 }
 
 @media(max-width: 1023px) {

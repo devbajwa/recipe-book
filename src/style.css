@@ -143,6 +143,11 @@ footer {
   margin-top: auto;
 }
 
+/* Helper Classes */
+.text-center {
+  text-align: center;
+}
+
 /* Button */
 button {
   cursor: pointer;
