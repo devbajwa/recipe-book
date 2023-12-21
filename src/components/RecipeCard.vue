@@ -11,6 +11,7 @@ const emit = defineEmits(["likeRecipe", "collectRecipe"])
 
 const spiceLevelClass = ref();
 const userLikedRecipe = ref();
+const userCollectedRecipe = ref(true);
 
 onMounted(async () => {
   if (props.recipe.spiceLevel === "Low") {
@@ -39,6 +40,7 @@ const handleCollection = async (recipeID, action) => {
 
 watchEffect(async () => {
   userLikedRecipe.value = await userInteractionService.getUserInteractionLikeForRecipe(props.currentUserEmail, props.recipe.id)
+  userCollectedRecipe.value = await userInteractionService.getUserInteractionCollectionForRecipe(props.currentUserEmail, props.recipe.id)
 })
 
 </script>
@@ -93,22 +95,23 @@ watchEffect(async () => {
       <p>{{ recipe.desc }}</p>
     </div>
     <div class="card__footer">
-      <span v-if="userLikedRecipe" class="icon">
-        <div class="flex">
+      <span class="icon">
+        <div class="flex" v-if="userLikedRecipe">
           <span class="number">{{ recipe.likes }}</span><font-awesome-icon icon="fa-solid fa-heart" class="fav-btn"
             title="Like recipe" @click="handleLikes(recipe.id)" />
         </div>
-
-        <font-awesome-icon icon="fa-solid fa-bookmark" class="fav-btn" title="Remove from collection"
-          @click="handleCollection(recipe.id, 'ADD')" />
-      </span>
-      <span v-else class="icon">
-        <div class="flex">
+        <div class="flex" v-else>
           <span class="number">{{ recipe.likes }}</span><font-awesome-icon icon="fa-regular fa-heart" class="fav-btn"
             title="Like recipe" @click="handleLikes(recipe.id)" />
         </div>
-        <font-awesome-icon icon="fa-regular fa-bookmark" class="fav-btn" title="Add to collection"
-          @click="handleCollection(recipe.id, 'ADD')" />
+        <div v-if="userCollectedRecipe">
+          <font-awesome-icon icon="fa-solid fa-bookmark" class="fav-btn" title="Remove from collection"
+            @click="handleCollection(recipe.id, 'REMOVE')" />
+        </div>
+        <div v-else>
+          <font-awesome-icon icon="fa-regular fa-bookmark" class="fav-btn" title="Add to collection"
+            @click="handleCollection(recipe.id, 'ADD')" />
+        </div>
       </span>
     </div>
   </div>

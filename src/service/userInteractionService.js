@@ -96,6 +96,24 @@ export const userInteractionService = {
             console.error('Error saving data:', error);
             throw error;
         }
+    },
+
+    // Check user interaction with the like data for recipe, is current user already liked the recipe - Likes
+    async getUserInteractionCollectionForRecipe(currentUserEmail, recipeID) {
+        try {
+            const q = doc(firebase.db, "userInteractions", currentUserEmail);
+            const querySnapshot = await getDoc(q);
+            const collectionData = { id: querySnapshot.id, collection: querySnapshot.data().collection }
+            const userCollectedRecipe = collectionData.collection.find(id => id === recipeID);
+            if (userCollectedRecipe) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.error('Error saving data:', error);
+            throw error;
+        }
     }
 
 
