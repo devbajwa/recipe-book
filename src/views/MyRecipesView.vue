@@ -41,8 +41,11 @@ const fetchCurrentUserRecipes = async () => {
 /* Update the recipe likes based on id */
 const updateRecipeLikes = async (recipeID) => {
     try {
-        await recipeService.updateFirestoreRecipeLikes(recipeID);
-        await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
+        const userLiked = await userInteractionService.getUserInteractionLikeForRecipe(currentUserEmail.value, recipeID)
+        if (!userLiked) {
+            await recipeService.updateFirestoreRecipeLikes(recipeID);
+            await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
+        }
     } catch (error) {
         console.error('Error saving likes data', error)
     }
@@ -75,7 +78,8 @@ const updateRecipeCollection = async (recipeID, action) => {
     <section class="container">
         <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
         <div v-if="recipes" class="card-container">
-            <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" @likeRecipe="updateRecipeLikes"
+            <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id"
+                :currentUserEmail="currentUserEmail" @likeRecipe="updateRecipeLikes"
                 @collectRecipe="updateRecipeCollection" />
         </div>
         <div v-else>

@@ -1,17 +1,18 @@
 <script setup>
-import { ref, defineProps, onMounted, defineEmits } from "vue"
+import { ref, defineProps, onMounted, defineEmits, watchEffect } from "vue"
 import { useRouter } from "vue-router"
-import { recipeService } from "../service/recipeService"
+import { userInteractionService } from "../service/userInteractionService"
 
 const router = useRouter();
 
-const props = defineProps(["recipe"]);
+const props = defineProps(["recipe", "currentUserEmail"]);
 
 const emit = defineEmits(["likeRecipe", "collectRecipe"])
 
 const spiceLevelClass = ref();
+const userLikedRecipe = ref();
 
-onMounted(() => {
+onMounted(async () => {
   if (props.recipe.spiceLevel === "Low") {
     spiceLevelClass.value = "low";
   }
@@ -35,6 +36,10 @@ const handleLikes = async (recipeID) => {
 const handleCollection = async (recipeID, action) => {
   emit("collectRecipe", recipeID, action);
 }
+
+watchEffect(async () => {
+  userLikedRecipe.value = await userInteractionService.getUserInteractionLikeForRecipe(props.currentUserEmail, props.recipe.id)
+})
 
 </script>
 
@@ -88,7 +93,7 @@ const handleCollection = async (recipeID, action) => {
       <p>{{ recipe.desc }}</p>
     </div>
     <div class="card__footer">
-      <span v-if="recipe.likes" class="icon">
+      <span v-if="userLikedRecipe" class="icon">
         <div class="flex">
           <span class="number">{{ recipe.likes }}</span><font-awesome-icon icon="fa-solid fa-heart" class="fav-btn"
             title="Like recipe" @click="handleLikes(recipe.id)" />
@@ -98,8 +103,10 @@ const handleCollection = async (recipeID, action) => {
           @click="handleCollection(recipe.id, 'ADD')" />
       </span>
       <span v-else class="icon">
-        <font-awesome-icon icon="fa-regular fa-heart" class="fav-btn" title="Like recipe"
-          @click="handleLikes(recipe.id)" />
+        <div class="flex">
+          <span class="number">{{ recipe.likes }}</span><font-awesome-icon icon="fa-regular fa-heart" class="fav-btn"
+            title="Like recipe" @click="handleLikes(recipe.id)" />
+        </div>
         <font-awesome-icon icon="fa-regular fa-bookmark" class="fav-btn" title="Add to collection"
           @click="handleCollection(recipe.id, 'ADD')" />
       </span>

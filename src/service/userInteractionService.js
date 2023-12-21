@@ -66,6 +66,36 @@ export const userInteractionService = {
             console.error('Error saving data:', error);
             throw error;
         }
+    },
+
+    // Get user interaction with the like and collection data for recipe - Likes & Collection
+    async getUserInteractionData(currentUserEmail) {
+        try {
+            const q = doc(firebase.db, "userInteractions", currentUserEmail);
+            const querySnapshot = await getDoc(q);
+            return querySnapshot;
+        } catch (error) {
+            console.error('Error saving data:', error);
+            throw error;
+        }
+    },
+
+    // Check user interaction with the like data for recipe, is current user already liked the recipe - Likes
+    async getUserInteractionLikeForRecipe(currentUserEmail, recipeID) {
+        try {
+            const q = doc(firebase.db, "userInteractions", currentUserEmail);
+            const querySnapshot = await getDoc(q);
+            const likesData = { id: querySnapshot.id, likes: querySnapshot.data().likes }
+            const userLikedRecipe = likesData.likes.find(id => id === recipeID);
+            if (userLikedRecipe) {
+                return true
+            } else {
+                return false
+            }
+        } catch (error) {
+            console.error('Error saving data:', error);
+            throw error;
+        }
     }
 
 

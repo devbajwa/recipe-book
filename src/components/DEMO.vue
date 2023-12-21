@@ -15,6 +15,13 @@ import {
 } from "firebase/firestore";
 
 import { recipeService } from "../service/recipeService";
+import { userInteractionService } from "../service/userInteractionService";
+import { useUserStore } from "../stores/UserStore";
+import { storeToRefs } from "pinia";
+/* Store */
+const store = useUserStore();
+const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store);
+const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
 
 const { firebase } = useFirebase();
 const recipes = ref([]);
@@ -77,6 +84,13 @@ onBeforeMount(async () => {
   );
   singleRecipe.value = { id: singleData.id, data: singleData.data() };
   //console.log(JSON.parse(JSON.stringify(singleRecipe.value)));
+  /* Get Current User Interaction Data */
+  const userInteractionData = await userInteractionService.getUserInteractionData(currentUserEmail.value)
+  const likesAndCollection = { id: userInteractionData.id, data: userInteractionData.data() };
+  console.log(likesAndCollection)
+  const userLiked = await userInteractionService.getUserInteractionLikeForRecipe(currentUserEmail.value, "2wuLjwtx5zpcKo2ynaUU")
+  console.log(userLiked)
+
 });
 </script>
 <template>

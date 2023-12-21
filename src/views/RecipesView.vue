@@ -5,7 +5,7 @@
         Then pass the recipes in a for loop as a prop to Recipe Card component which render the recipe key details.
 -->
 <script setup>
-import { ref, onBeforeMount, computed, onMounted } from "vue";
+import { ref, onBeforeMount, computed, onMounted, watch } from "vue";
 import HeroSection from "../components/HeroSection.vue";
 import RecipeCard from "../components/RecipeCard.vue";
 import Loader from "../components/Loader.vue";
@@ -44,8 +44,11 @@ const fetchAllRecipes = async () => {
 /* Update the recipe likes based on id */
 const updateRecipeLikes = async (recipeID) => {
   try {
-    await recipeService.updateFirestoreRecipeLikes(recipeID);
-    await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
+    const userLiked = await userInteractionService.getUserInteractionLikeForRecipe(currentUserEmail.value, recipeID)
+    if (!userLiked) {
+      await recipeService.updateFirestoreRecipeLikes(recipeID);
+      await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
+    }
   } catch (error) {
     console.error('Error saving likes data', error)
   }
@@ -69,14 +72,15 @@ const updateRecipeCollection = async (recipeID, action) => {
   }
   fetchAllRecipes()
 }
+
 </script>
 <template>
   <HeroSection />
   <section class="container">
     <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
     <div v-if="recipes" class="card-container">
-      <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" @likeRecipe="updateRecipeLikes"
-        @collectRecipe="updateRecipeCollection" />
+      <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id" :currentUserEmail="currentUserEmail"
+        @likeRecipe="updateRecipeLikes" @collectRecipe="updateRecipeCollection" />
     </div>
     <div v-else>
       <Loader :text="'Fetching recipes...'" />
