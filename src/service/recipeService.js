@@ -114,5 +114,17 @@ export const recipeService = {
     }
   },
 
+  // Increment views by 1
+  async updateFirestoreRecipeViews(recipeID) {
+    try {
+      await updateDoc(doc(firebase.db, "recipes", recipeID), {
+        views: increment(1)
+      });
+    } catch (error) {
+      console.error('Error saving data:', error);
+      throw error;
+    }
+  },
+
 
 };

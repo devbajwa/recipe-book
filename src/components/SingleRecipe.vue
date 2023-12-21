@@ -54,6 +54,9 @@ onMounted(async () => {
     }
   };
   checkSpiceLevel();
+
+  //Increment view of the recipe in firestore
+  await recipeService.updateFirestoreRecipeViews(props.recipe.id);
 });
 
 const handleEdit = () => {
