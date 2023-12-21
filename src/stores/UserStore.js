@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import useFirebase from '../firebase/useFirebase'
 import { useToast } from "vue-toastification"
+import { userInteractionService } from "../service/userInteractionService"
 
 /* Toastification messages */
 const toast = useToast();
@@ -40,6 +41,7 @@ export const useUserStore = defineStore('UserStore', () => {
                 currentUserEmail.value = user.email;
                 isSignedIn.value = true;
                 toast.success("You are logged in Successfully");
+                addUserInteractionNewUser(currentUserEmail.value);
             }).catch((error) => {
                 console.error(error);
             })
@@ -54,6 +56,16 @@ export const useUserStore = defineStore('UserStore', () => {
             isSignedIn.value = false;
             toast.success("You are logged out Successfully");
         })
+    }
+
+    // Add new signed in to firestore userInteraction
+    const addUserInteractionNewUser = async (currentUserEmail) => {
+        try {
+            await userInteractionService.addUserInteractionNewSignedInUser(currentUserEmail);
+        } catch (error) {
+            console.error('Error saving user', error)
+        }
+
     }
 
     return { getCurrentUser, currentUser, currentUserEmail, isSignedIn, handleSignInGoogle, handleSignOutGoogle }

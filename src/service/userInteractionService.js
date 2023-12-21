@@ -27,6 +27,23 @@ export const userInteractionService = {
     /* Firestore Cloud */
 
     // Add user interaction with the collection data for recipe - Bookmark
+    async addUserInteractionNewSignedInUser(currentUserEmail) {
+        try {
+            const docRef = doc(firebase.db, "userInteractions", currentUserEmail);
+            const docSnap = await getDoc(docRef);
+            if (!docSnap.exists()) {
+                await setDoc(doc(firebase.db, "userInteractions", currentUserEmail), { collection: [], likes: [] });
+            } else {
+                console.log("Welcome ", currentUserEmail)
+            }
+
+        } catch (error) {
+            console.error('Error saving data:', error);
+            throw error;
+        }
+    },
+
+    // Add user interaction with the collection data for recipe - Bookmark
     async addUserInteractionCollection(currentUserEmail, recipeID) {
         try {
             const recipeRef = doc(firebase.db, "userInteractions", currentUserEmail);
@@ -82,38 +99,43 @@ export const userInteractionService = {
 
     // Check user interaction with the like data for recipe, is current user already liked the recipe - Likes
     async getUserInteractionLikeForRecipe(currentUserEmail, recipeID) {
-        try {
-            const q = doc(firebase.db, "userInteractions", currentUserEmail);
-            const querySnapshot = await getDoc(q);
-            const likesData = { id: querySnapshot.id, likes: querySnapshot.data().likes }
-            const userLikedRecipe = likesData.likes.find(id => id === recipeID);
-            if (userLikedRecipe) {
-                return true
-            } else {
-                return false
+        if (currentUserEmail !== undefined && currentUserEmail !== null && currentUserEmail.length > 0) {
+            try {
+                const q = doc(firebase.db, "userInteractions", currentUserEmail);
+                const querySnapshot = await getDoc(q);
+                const likesData = { id: querySnapshot.id, likes: querySnapshot.data().likes }
+                const userLikedRecipe = likesData.likes.find(id => id === recipeID);
+                if (userLikedRecipe) {
+                    return true
+                } else {
+                    return false
+                }
+            } catch (error) {
+                console.error('Error saving data:', error);
+                throw error;
             }
-        } catch (error) {
-            console.error('Error saving data:', error);
-            throw error;
         }
     },
 
     // Check user interaction with the like data for recipe, is current user already liked the recipe - Likes
     async getUserInteractionCollectionForRecipe(currentUserEmail, recipeID) {
-        try {
-            const q = doc(firebase.db, "userInteractions", currentUserEmail);
-            const querySnapshot = await getDoc(q);
-            const collectionData = { id: querySnapshot.id, collection: querySnapshot.data().collection }
-            const userCollectedRecipe = collectionData.collection.find(id => id === recipeID);
-            if (userCollectedRecipe) {
-                return true
-            } else {
-                return false
+        if (currentUserEmail !== undefined && currentUserEmail !== null && currentUserEmail.length > 0) {
+            try {
+                const q = doc(firebase.db, "userInteractions", currentUserEmail);
+                const querySnapshot = await getDoc(q);
+                const collectionData = { id: querySnapshot.id, collection: querySnapshot.data().collection }
+                const userCollectedRecipe = collectionData.collection.find(id => id === recipeID);
+                if (userCollectedRecipe) {
+                    return true
+                } else {
+                    return false
+                }
+            } catch (error) {
+                console.error('Error saving data:', error);
+                throw error;
             }
-        } catch (error) {
-            console.error('Error saving data:', error);
-            throw error;
         }
+
     }
 
 

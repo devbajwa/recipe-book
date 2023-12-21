@@ -2,6 +2,17 @@
 import { ref, defineProps, onMounted, defineEmits, watchEffect } from "vue"
 import { useRouter } from "vue-router"
 import { userInteractionService } from "../service/userInteractionService"
+import { useUserStore } from "../stores/UserStore"
+import { storeToRefs } from "pinia"
+import { useToast } from "vue-toastification";
+
+/* toastification messages */
+const toast = useToast();
+
+/* Store */
+const store = useUserStore();
+const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store);
+const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
 
 const router = useRouter();
 
@@ -11,7 +22,7 @@ const emit = defineEmits(["likeRecipe", "collectRecipe"])
 
 const spiceLevelClass = ref();
 const userLikedRecipe = ref();
-const userCollectedRecipe = ref(true);
+const userCollectedRecipe = ref();
 
 onMounted(async () => {
   if (props.recipe.spiceLevel === "Low") {
@@ -30,17 +41,31 @@ onMounted(async () => {
 
 /* Function to emit the id of recipe to increment the like of recipe */
 const handleLikes = async (recipeID) => {
-  emit("likeRecipe", recipeID);
+  if (isSignedIn.value) {
+    emit("likeRecipe", recipeID);
+  } else {
+    toast.warning("Sorry you need to login with Google account")
+    handleSignInGoogle();
+  }
 }
 
 /* Function to emit the id of recipe to increment the like of recipe */
 const handleCollection = async (recipeID, action) => {
-  emit("collectRecipe", recipeID, action);
+  if (isSignedIn.value) {
+    emit("collectRecipe", recipeID, action);
+  } else {
+    toast.warning("Sorry you need to login with Google account")
+    handleSignInGoogle();
+  }
 }
 
 watchEffect(async () => {
-  userLikedRecipe.value = await userInteractionService.getUserInteractionLikeForRecipe(props.currentUserEmail, props.recipe.id)
-  userCollectedRecipe.value = await userInteractionService.getUserInteractionCollectionForRecipe(props.currentUserEmail, props.recipe.id)
+  try {
+    userLikedRecipe.value = await userInteractionService.getUserInteractionLikeForRecipe(props.currentUserEmail, props.recipe.id)
+    userCollectedRecipe.value = await userInteractionService.getUserInteractionCollectionForRecipe(props.currentUserEmail, props.recipe.id)
+  } catch (error) {
+    console.error("Error", error)
+  }
 })
 
 </script>
