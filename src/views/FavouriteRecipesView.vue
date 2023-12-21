@@ -23,23 +23,33 @@ const { currentUser, currentUserEmail, isSignedIn } = storeToRefs(store);
 const { getCurrentUser, handleSignInGoogle, handleSignOutGoogle } = store;
 
 onMounted(() => {
-    // Fetch all the recipes from firestore via service api
-    fetchCurrentUserRecipes();
+    fetchUserCollectedRecipes()
 });
 
-const recipes = ref();
+const favouriteRecipes = ref([]);
 const search = ref("");
 const loading = ref(true);
 
 const filteredRecipes = computed(() => {
     const query = search.value.toLowerCase()
-    return recipes.value.filter(recipe => recipe.name.toLowerCase().includes(query))
+    return favouriteRecipes.value.filter(recipe => recipe.name.toLowerCase().includes(query))
 })
 
-const fetchCurrentUserRecipes = async () => {
-    // Fetch all the recipes from firestore via service api for the current user
-    const fetchedRecipesFromAPI = await recipeService.getFirestoreCurrentUserRecipes(currentUserEmail.value);
-    recipes.value = fetchedRecipesFromAPI;
+const fetchUserCollectedRecipes = async () => {
+    const userInteractionData = await userInteractionService.getUserInteractionData(currentUserEmail.value)
+    const userCollection = { id: userInteractionData.id, collection: userInteractionData.data().collection };
+    const data = [];
+    // Assuming userCollection.collection is an array of ids
+    await Promise.all(userCollection.collection.map(async (id) => {
+        const fetchedRecipeFromAPI = await recipeService.getFirestoreRecipe(id);
+        const recipe = {
+            id: fetchedRecipeFromAPI.id,
+            ...fetchedRecipeFromAPI.data(),
+        };
+        data.push(recipe);
+    }));
+
+    favouriteRecipes.value = data;
     loading.value = false;
 }
 
@@ -58,7 +68,7 @@ const updateRecipeLikes = async (recipeID) => {
     } catch (error) {
         console.error('Error saving likes data', error)
     }
-    fetchCurrentUserRecipes()
+    fetchUserCollectedRecipes()
 }
 
 /* Update the recipe collection based on id */
@@ -78,28 +88,28 @@ const updateRecipeCollection = async (recipeID, action) => {
             console.error('Error saving likes data', error)
         }
     }
-    fetchCurrentUserRecipes()
+    fetchUserCollectedRecipes()
 }
 </script>
 <template>
     <section class="subhero">
-        <h1 class="title">My Recipes</h1>
+        <h1 class="title">Favourite Recipes</h1>
         <h4>{{ currentUser }}</h4>
     </section>
     <section class="container">
         <div v-if="loading">
             <Loader :text="'Fetching recipes...'" />
         </div>
-        <div v-else-if="!loading && recipes.length > 0">
+        <div v-else-if="!loading && favouriteRecipes.length > 0">
             <input type="text" v-model.trim="search" placeholder="Search recipe..." class="search-input">
-            <div v-if="recipes" class="card-container">
+            <div v-if="favouriteRecipes" class="card-container">
                 <RecipeCard :recipe="recipe" v-for="recipe in filteredRecipes" :key="recipe.id"
                     :currentUserEmail="currentUserEmail" @likeRecipe="updateRecipeLikes"
                     @collectRecipe="updateRecipeCollection" />
             </div>
         </div>
         <div v-else>
-            <h3>Sorry you dont have any recipes added. Please add your own recipes.</h3>
+            <h3>Sorry you dont have any favourite recipes added. Please add favourite recipes to your collection.</h3>
         </div>
     </section>
 </template>

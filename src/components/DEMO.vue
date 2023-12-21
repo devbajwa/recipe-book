@@ -86,10 +86,10 @@ onBeforeMount(async () => {
   //console.log(JSON.parse(JSON.stringify(singleRecipe.value)));
   /* Get Current User Interaction Data */
   const userInteractionData = await userInteractionService.getUserInteractionData(currentUserEmail.value)
-  const likesAndCollection = { id: userInteractionData.id, data: userInteractionData.data() };
-  console.log(likesAndCollection)
-  const userLiked = await userInteractionService.getUserInteractionLikeForRecipe(currentUserEmail.value, "2wuLjwtx5zpcKo2ynaUU")
-  console.log(userLiked)
+  const userCollection = { id: userInteractionData.id, data: userInteractionData.data().collection };
+  console.log(userCollection)
+  // const userLiked = await userInteractionService.getUserInteractionLikeForRecipe(currentUserEmail.value, "2wuLjwtx5zpcKo2ynaUU")
+  // console.log(userLiked)
 
 });
 </script>

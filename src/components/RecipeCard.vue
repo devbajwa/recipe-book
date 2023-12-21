@@ -96,14 +96,6 @@ watchEffect(async () => {
     </div>
     <div class="card__footer">
       <span class="icon">
-        <div class="flex" v-if="userLikedRecipe">
-          <span class="number">{{ recipe.likes }}</span><font-awesome-icon icon="fa-solid fa-heart" class="fav-btn"
-            title="Like recipe" @click="handleLikes(recipe.id)" />
-        </div>
-        <div class="flex" v-else>
-          <span class="number">{{ recipe.likes }}</span><font-awesome-icon icon="fa-regular fa-heart" class="fav-btn"
-            title="Like recipe" @click="handleLikes(recipe.id)" />
-        </div>
         <div v-if="userCollectedRecipe">
           <font-awesome-icon icon="fa-solid fa-bookmark" class="fav-btn" title="Remove from collection"
             @click="handleCollection(recipe.id, 'REMOVE')" />
@@ -111,6 +103,14 @@ watchEffect(async () => {
         <div v-else>
           <font-awesome-icon icon="fa-regular fa-bookmark" class="fav-btn" title="Add to collection"
             @click="handleCollection(recipe.id, 'ADD')" />
+        </div>
+        <div class="flex" v-if="userLikedRecipe">
+          <span class="number">{{ recipe.likes }} people liked</span><font-awesome-icon icon="fa-solid fa-heart"
+            class="fav-btn" title="Like recipe" @click="handleLikes(recipe.id)" />
+        </div>
+        <div class="flex" v-else>
+          <span class="number">{{ recipe.likes }} people liked</span><font-awesome-icon icon="fa-regular fa-heart"
+            class="fav-btn" title="Like recipe" @click="handleLikes(recipe.id)" />
         </div>
       </span>
     </div>
@@ -172,11 +172,12 @@ watchEffect(async () => {
   flex: 1;
 }
 
-.card .card__footer span {
+.card .card__footer span.icon {
   display: flex;
   gap: 0.65rem;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
+  margin-top: 1.125rem;
 }
 
 
@@ -188,7 +189,7 @@ watchEffect(async () => {
 }
 
 .flex .number {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
 }
 
 /* Media query for smaller screens */

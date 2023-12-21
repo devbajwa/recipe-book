@@ -13,6 +13,10 @@ import { recipeService } from "../service/recipeService"
 import { userInteractionService } from "../service/userInteractionService";
 import { useUserStore } from "../stores/UserStore";
 import { storeToRefs } from "pinia";
+import { useToast } from "vue-toastification";
+
+/* toastification messages */
+const toast = useToast();
 
 /* Store */
 const store = useUserStore();
@@ -48,6 +52,10 @@ const updateRecipeLikes = async (recipeID) => {
     if (!userLiked) {
       await recipeService.updateFirestoreRecipeLikes(recipeID);
       await userInteractionService.updateUserInteractionLikes(currentUserEmail.value, recipeID);
+      toast.success('Hurray, your liked this recipe ')
+    }
+    else {
+      toast.success('Thanks, your already liked this recipe ')
     }
   } catch (error) {
     console.error('Error saving likes data', error)
@@ -60,12 +68,14 @@ const updateRecipeCollection = async (recipeID, action) => {
   if (action === "ADD") {
     try {
       await userInteractionService.addUserInteractionCollection(currentUserEmail.value, recipeID);
+      toast.success('Hurray, reciped added to your favourites')
     } catch (error) {
       console.error('Error saving likes data', error)
     }
   } else {
     try {
       await userInteractionService.removeUserInteractionCollection(currentUserEmail.value, recipeID);
+      toast.success('Thank you, reciped removed from your favourites')
     } catch (error) {
       console.error('Error saving likes data', error)
     }

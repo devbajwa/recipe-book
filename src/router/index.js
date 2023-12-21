@@ -7,6 +7,7 @@ import RecipeDetailView from '../views/RecipeDetailView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
 import DEMO from '../components/DEMO.vue'
 import MyRecipesView from '../views/MyRecipesView.vue'
+import FavouriteRecipesView from '../views/FavouriteRecipesView.vue'
 import { useUserStore } from "../stores/UserStore";
 
 
@@ -55,6 +56,14 @@ const router = createRouter({
             path: '/my-recipes',
             name: 'myRecipes',
             component: MyRecipesView,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/favourite-recipes',
+            name: 'favRecipes',
+            component: FavouriteRecipesView,
             meta: {
                 requiresAuth: true
             }

@@ -71,6 +71,7 @@ document.addEventListener('click', function (event) {
         <div class="popup" id="popup">
           <h4>Dashboard</h4>
           <div class="nav-links">
+            <a href="#" @click="router.push('/favourite-recipes')">Favourites</a>
             <a href="#" @click="router.push('/my-recipes')">My Recipes</a>
             <a href="#" @click="handleSignOutGoogle">Log out</a>
           </div>
