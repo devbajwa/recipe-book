@@ -34,6 +34,12 @@
 }
 
 @media (max-width: 768px) {
+
+    .tech-stack {
+        padding-inline: 10px;
+        gap: 1.25rem;
+    }
+
     .tech-stack img {
         height: 80px;
     }
