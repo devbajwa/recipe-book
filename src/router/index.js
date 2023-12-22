@@ -8,6 +8,7 @@ import NotFoundView from '../views/NotFoundView.vue'
 import DEMO from '../components/DEMO.vue'
 import MyRecipesView from '../views/MyRecipesView.vue'
 import FavouriteRecipesView from '../views/FavouriteRecipesView.vue'
+import PrivacyPolicyView from '../views/PrivacyPolicyView.vue'
 import { useUserStore } from "../stores/UserStore";
 
 
@@ -67,6 +68,11 @@ const router = createRouter({
             meta: {
                 requiresAuth: true
             }
+        },
+        {
+            path: '/privacy-policy',
+            name: 'privacyPolicy',
+            component: PrivacyPolicyView
         },
     ]
 })

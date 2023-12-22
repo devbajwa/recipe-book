@@ -1,32 +1,15 @@
-<template>
-  <section class="subhero">
-    <h1>About</h1>
-  </section>
+<script setup>
+import { ref } from 'vue'
+import Tabs from '../components/Tabs.vue'
+import TechStackIcons from '../components/TechStackIcons.vue';
 
-  <section class="container">
-    <div class="profile">
-      <img src="https://avatars.githubusercontent.com/u/46511392?v=4" alt="Waqas" />
-      <div class="details">
-        <h2>Waqas Naeem Bajwa</h2>
-        <p>Frontend Developer</p>
-        <div class="social-links">
-          <a class="social-link" href="https://www.linkedin.com/in/waqas-bajwa-35a85744/" target="_blank"
-            rel="noopener noreferrer" title="LinkedIn">
-            <font-awesome-icon icon="fa-brands fa-linkedin" />
-          </a>
-          <a class="social-link" href="https://github.com/devbajwa" target="_blank" rel="noopener noreferrer"
-            title="GitHub">
-            <font-awesome-icon icon="fa-brands fa-github" />
-          </a>
-          <a class="social-link" href="https://devbajwa.com" target="_blank" rel="noopener noreferrer" title="Hashnode">
-            <font-awesome-icon icon="fa-brands fa-hashnode" />
-          </a>
-        </div>
-      </div>
-    </div>
 
-    <div class="content">
-      <h2 class="sub-heading">Introduction</h2>
+const tabs = [{
+  label: 'Developer',
+  content: `   
+  <h1 class="sub-heading">
+        Developer
+      </h1>
       <p>
         Hey there! I'm
         <a href="https://www.linkedin.com/in/waqas-bajwa-35a85744/" target="_blank" rel="noopener noreferrer"
@@ -59,16 +42,32 @@
         a dash of collaboration, let's connect! Drop me a message, and let's
         make some frontend magic happen. 🚧💻✨
       </p>
-    </div>
-    <div class="tech-stack border-block">
-      <img src="../assets/html5.png" alt="HTML5">
-      <img src="../assets/css3.png" alt="CSS3">
-      <img src="../assets/js.png" alt="JS">
-      <img src="../assets/vue.png" alt="VUE">
-      <img src="../assets/firebase.png" alt="Firebase">
-    </div>
-    <div class="content">
-      <h1 class="sub-heading border-top">
+    `
+}, {
+  label: 'Recipen App',
+  content: `    
+      <h1 class="sub-heading">
+        ReciPen App
+      </h1>
+      <p>
+            Welcome to <span class="brand">ReciPen</span>, your go-to recipe companion for effortless
+            record-keeping. Designed with busy wives and mothers in mind, our app
+            simplifies the art of organizing and recalling your favorite recipes.</p>
+        <p>Easily document the dishes you prepare for special occasions, creating a
+            personalized culinary archive. With a straightforward interface, <span class="brand">ReciPen</span> makes it a
+            breeze to revisit and recreate those cherished recipes,
+            transforming every meal into a delightful memory.</p>
+        <p>Streamline your cooking
+            journey and savor the convenience of having your go-to recipes at your
+            fingertips.</p>
+        <p>Welcome to stress-free and organized meal planning with <span class="brand">ReciPen</span>.
+        </p>
+
+    `
+}, {
+  label: 'Disclaimer',
+  content: `    
+      <h1 class="sub-heading">
         Disclaimer
       </h1>
       <p>This web app has been crafted as part of a learning journey, and while I've put my best effort into creating a
@@ -91,24 +90,45 @@
       <p>More than happy to receive any feedback, suggestions or thoughts.<br />Thanks for understanding and joining us
         on this learning adventure! 🚀</p>
 
+    `
+}
+]
+</script>
+<template>
+  <section class="subhero">
+    <h1>About</h1>
+  </section>
+
+  <section class="container">
+    <div class="profile">
+      <img src="https://avatars.githubusercontent.com/u/46511392?v=4" alt="Waqas" />
+      <div class="details">
+        <h2>Waqas Naeem Bajwa</h2>
+        <p>Frontend Developer</p>
+        <div class="social-links">
+          <a class="social-link" href="https://www.linkedin.com/in/waqas-bajwa-35a85744/" target="_blank"
+            rel="noopener noreferrer" title="LinkedIn">
+            <font-awesome-icon icon="fa-brands fa-linkedin" />
+          </a>
+          <a class="social-link" href="https://github.com/devbajwa" target="_blank" rel="noopener noreferrer"
+            title="GitHub">
+            <font-awesome-icon icon="fa-brands fa-github" />
+          </a>
+          <a class="social-link" href="https://devbajwa.com" target="_blank" rel="noopener noreferrer" title="Hashnode">
+            <font-awesome-icon icon="fa-brands fa-hashnode" />
+          </a>
+        </div>
+      </div>
+
     </div>
+    <Tabs :tabs="tabs" />
+
+    <TechStackIcons />
+
   </section>
 </template>
 
 <style scoped>
-.content {
-  line-height: 1.85rem;
-  margin-top: 4rem;
-}
-
-.sub-heading {
-  margin-bottom: 1rem;
-}
-
-.sub-heading+p {
-  margin-bottom: 2rem;
-}
-
 .border-block {
   border-block: 1px solid var(--border-color);
   padding-block: 24px;
@@ -162,42 +182,6 @@
   height: 150px;
   border-radius: 50%;
   box-shadow: 0 0px 20px #42b8835e;
-}
-
-a {
-  color: var(--primary);
-  font-weight: bold;
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--accent);
-}
-
-.inverse {
-  background: var(--green-lightest);
-  color: var(--dark-grey);
-  clip-path: inset(0 -100vw);
-  box-shadow: 0 0 0 25px var(--green-lightest);
-  padding-block: 1rem;
-}
-
-.tech-stack {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
-  align-items: center;
-}
-
-.tech-stack img {
-  height: 150px;
-}
-
-@media (max-width: 768px) {
-  .tech-stack img {
-    height: 80px;
-  }
 }
 
 @media (max-width: 450px) {

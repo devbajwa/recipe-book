@@ -16,10 +16,10 @@ import { faUtensils, faBowlFood, faHeart as faHeartSolid, faMortarPestle, faFire
 import { faClock, faCalendar, faHeart as faHeartRegular, faEdit, faFaceSmile, faCircleUser, faTrashCan, faBookmark as faBookMarkRegular } from '@fortawesome/free-regular-svg-icons'
 
 /* import brand icons regular */
-import { faGithub, faLinkedin, faHashnode, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faGithub, faLinkedin, faHashnode, faGoogle, faHtml5, faCss3, faJs, faVuejs } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
-library.add(faClock, faCalendar, faUtensils, faBowlFood, faHeartSolid, faHeartRegular, faMortarPestle, faFireFlameCurved, faPepperHot, faEdit, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faFaceSmile, faBowlRice, faUser, faCaretRight, faLinkedin, faGithub, faHashnode, faGoogle, faCircleUser, faTrashCan, faBookMarkRegular, faBookMarkSolid)
+library.add(faClock, faCalendar, faUtensils, faBowlFood, faHeartSolid, faHeartRegular, faMortarPestle, faFireFlameCurved, faPepperHot, faEdit, faCircleXmark, faPlus, faCubesStacked, faCakeCandles, faFaceSmile, faBowlRice, faUser, faCaretRight, faLinkedin, faGithub, faHashnode, faGoogle, faCircleUser, faTrashCan, faBookMarkRegular, faBookMarkSolid, faHtml5, faCss3, faJs, faVuejs)
 
 /* import vue-toastificaiton */
 import Toast from "vue-toastification"

@@ -41,6 +41,23 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
+  overflow-y: scroll;
+}
+body {
+  /* overflow-y: scroll; Always show vertical scrollbar */
+}
+
+/* Optional: Customize scrollbar appearance */
+::-webkit-scrollbar {
+  width: 12px; /* Adjust the width as needed */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--green-light); /* Color of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--green-lightest); /* Color of the scrollbar track */
 }
 
 a {
