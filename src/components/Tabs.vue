@@ -119,5 +119,24 @@ watch(activeTab, () => {
     box-shadow: 0 0 0 25px var(--green-lightest);
     padding-block: 1rem;
 }
+
+@media(max-width:545px) {
+    .tab {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+        font-weight: 400;
+        text-wrap: nowrap;
+    }
+}
+
+@media(max-width: 425px) {
+    .tab-container {
+        overflow-x: scroll;
+    }
+
+    .tab-container::-webkit-scrollbar {
+        height: 2px !important;
+    }
+}
 </style>
   

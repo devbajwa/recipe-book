@@ -43,9 +43,6 @@ body {
   min-height: 100dvh;
   overflow-y: scroll;
 }
-body {
-  /* overflow-y: scroll; Always show vertical scrollbar */
-}
 
 /* Optional: Customize scrollbar appearance */
 ::-webkit-scrollbar {
