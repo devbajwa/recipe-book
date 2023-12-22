@@ -70,6 +70,19 @@ export const userInteractionService = {
             throw error;
         }
     },
+    // Remove user interaction with the collection data for recipe - Bookmark
+    async removeUserInteractionLike(currentUserEmail, recipeID) {
+        try {
+            const recipeRef = doc(firebase.db, "userInteractions", currentUserEmail);
+            // Remove the recipeID to user interaction collection collection field
+            await updateDoc(recipeRef, {
+                likes: arrayRemove(recipeID)
+            });
+        } catch (error) {
+            console.error('Error saving data:', error);
+            throw error;
+        }
+    },
 
     // Update user interaction with the like data for recipe - Likes
     async updateUserInteractionLikes(currentUserEmail, recipeID) {

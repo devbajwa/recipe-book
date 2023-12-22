@@ -15,6 +15,7 @@ import {
 } from "vue"
 import { useRouter } from "vue-router"
 import { recipeService } from "../service/recipeService"
+import { userInteractionService } from "../service/userInteractionService"
 import { useUserStore } from "../stores/UserStore"
 import { storeToRefs } from 'pinia'
 import { useToast } from "vue-toastification"
@@ -67,6 +68,8 @@ const handleDelete = async () => {
   if (ans) {
     try {
       await recipeService.deleteFirestoreRecipe(props.recipe.id)
+      await userInteractionService.removeUserInteractionCollection(currentUserEmail.value, props.recipe.id)
+      await userInteractionService.removeUserInteractionLike(currentUserEmail.value, props.recipe.id)
       toast.success("Recipe deleted successfully")
       router.push('/my-recipes')
     } catch (error) {
@@ -149,7 +152,7 @@ const handleDelete = async () => {
         </ul>
       </div>
     </section>
-    <div v-if="isSignedIn" class="crud-operations">
+    <div v-if="currentUserEmail === recipe.data.currentUserEmail" class="crud-operations">
       <div class="edit" @click="handleEdit">
         <a href="#"><font-awesome-icon icon="fa-regular fa-edit" /> Edit this recipe</a>
       </div>

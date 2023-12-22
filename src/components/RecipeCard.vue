@@ -73,7 +73,10 @@ watchEffect(async () => {
 <template>
   <div class="card">
     <div class="card__header">
-      <span class="category">{{ recipe.category }}</span>
+      <div class="card__header-details">
+        <div class="name">{{ recipe.chef }}</div>
+        <div class="category">{{ recipe.category }}</div>
+      </div>
 
       <!-- <div>
         <font-awesome-icon
@@ -155,6 +158,19 @@ watchEffect(async () => {
   /* Cards will take equal width within the flex container */
 }
 
+.card .card__header .name {
+  font-size: 0.75rem;
+  letter-spacing: 0.15ch;
+  text-transform: uppercase;
+  padding: 0.15rem 0.25rem;
+  border-radius: 5px;
+  color: var(--dark-grey);
+  color: var(--primary);
+  display: flex;
+  align-self: flex-end;
+
+}
+
 .card .card__header .category {
   font-size: 0.65rem;
   text-transform: uppercase;
@@ -165,6 +181,14 @@ watchEffect(async () => {
   display: flex;
   align-self: flex-end;
 
+}
+
+
+
+.card .card__header-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
 }
 
 .card .card__title {
@@ -179,14 +203,14 @@ watchEffect(async () => {
   color: var(--accent);
 }
 
-.card .card__header {
+/* .card .card__header {
   display: flex;
   flex-direction: column;
   align-items: start;
   flex-wrap: wrap;
-}
+} */
 
-.card .card__header div {
+/* .card .card__header div {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -195,7 +219,7 @@ watchEffect(async () => {
 
 .card .card__header div span {
   flex: 1;
-}
+} */
 
 .card .card__footer span.icon {
   display: flex;
