@@ -417,6 +417,7 @@ textarea,
 select {
   padding: 0.25rem 0.5rem;
   border: 1px solid var(--primary);
+  background-color: #fff;
 }
 
 input[type="text"]:focus,

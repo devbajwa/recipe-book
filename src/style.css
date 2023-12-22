@@ -141,6 +141,7 @@ section.subhero h4 {
   max-width: calc(100% - 16px);
   font-family: var(--main-font);
   font-size: 0.95rem;
+  background-color: #fff;
 }
 .search-input:focus {
   border: 1px solid var(--primary);
