@@ -120,6 +120,13 @@ watch(activeTab, () => {
     padding-block: 1rem;
 }
 
+@media(max-width:769px) {
+    .tab {
+        font-size: 1rem;
+
+    }
+}
+
 @media(max-width:545px) {
     .tab {
         padding: 12px 15px;
